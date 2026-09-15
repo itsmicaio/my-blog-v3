@@ -1,12 +1,4 @@
-# Site Chrome
-
-## Purpose
-
-Defines the reader-facing shell shared across the site and the navigational pages that
-are not individual posts: the persistent header, the home index that lists every post,
-the linktree landing page, and the not-found page.
-
-## Requirements
+## MODIFIED Requirements
 
 ### Requirement: Persistent site header
 
@@ -90,67 +82,6 @@ width.
 
 - **WHEN** a reader loads any page with JavaScript turned off
 - **THEN** the header renders and lays out exactly as it does with scripting enabled
-
-### Requirement: Home page lists every published post
-
-The home page at `/` SHALL list every published post in reverse chronological order,
-newest first, with no pagination. Each entry SHALL show the post title, up to three tag
-labels, and the post's short summary. When a post carries more than three tags, the
-remainder SHALL be indicated by a count rather than omitted silently. The whole entry
-SHALL be a single link to the post.
-
-#### Scenario: Ordering
-
-- **WHEN** a reader opens the home page
-- **THEN** posts appear newest first and every published post is present
-
-#### Scenario: Post with many tags
-
-- **WHEN** a listed post declares five tags
-- **THEN** three labels are shown followed by an indicator that two more exist
-
-#### Scenario: Clicking an entry
-
-- **WHEN** a reader clicks anywhere on a post entry
-- **THEN** that post's page loads
-
-#### Scenario: Post type does not affect the index
-
-- **WHEN** posts of type `blog`, `article` and `tutorial` are all published
-- **THEN** all of them appear on the home page
-
-### Requirement: Linktree page
-
-A page at `/linktree/` SHALL present a compact profile view: the author's avatar and
-name, prominent links to LinkedIn, GitHub and Instagram, and the four most recent posts
-of type `article`. Posts of other types SHALL be excluded, so that diary entries and
-course notes do not appear. The page SHALL provide a link to the full post index.
-
-#### Scenario: Only articles are listed
-
-- **WHEN** the most recent posts include entries of type `blog` and `article`
-- **THEN** only the four most recent `article` posts are listed
-
-#### Scenario: Fewer than four articles exist
-
-- **WHEN** only two posts of type `article` are published
-- **THEN** both are listed and the page renders without empty placeholder entries
-
-#### Scenario: Reaching the full index
-
-- **WHEN** a reader clicks the link to see everything
-- **THEN** the home page loads
-
-### Requirement: Not-found page
-
-A request for an address the site does not serve SHALL render a not-found page written in
-the site's language, offering a link back to the home page, and presented in the site's
-own visual design.
-
-#### Scenario: Unknown address
-
-- **WHEN** a reader requests a path that does not exist
-- **THEN** the not-found page renders in Portuguese with a working link home
 
 ### Requirement: Site visual identity
 

@@ -1,7 +1,51 @@
 @import 'tailwindcss';
 
 @theme {
+  /* v2's accent. Still used by the post index, linktree and post body, which keep
+     their light styling until those surfaces move to the new identity. */
   --color-green: #4e8663;
+
+  /* Emerald 8-Bit Arcade. Names and values come from the design system in HEADER.HTML.
+     Two rules carry the whole 8-bit look: corners are square, and raised elements cast a
+     hard offset shadow in --color-pixel-black with no blur. Don't round anything and
+     don't soften a shadow.
+
+     Grounds are grouped below, and the text tokens are legible only on their own ground:
+     the `on dark` set is unreadable on the band or the page, and vice versa. */
+  --color-page: #f4f1ea;
+
+  /* grounds */
+  --color-header: #131b17;
+  --color-band: #dfd9cb;
+  --color-band-raised: #eae5d9;
+
+  /* recesses inset into the dark bar */
+  --color-well: #0a0e14;
+  --color-well-soft: #1a2520;
+  --color-well-low: #181c22;
+
+  /* emerald ramp, deep to light */
+  --color-emerald-deep: #1e4d3a;
+  --color-emerald-base: #2d6a4f;
+  --color-emerald-mid: #40916c;
+  --color-emerald-light: #52b788;
+  --color-emerald-mint: #74c69d;
+  --color-emerald-glow: #95d5b2;
+  --color-emerald-soft: #a8e7c5;
+
+  /* text */
+  --color-bright: #f7f9f6;
+  --color-on-dark: #bfc9c1;
+  --color-outline: #8a938c;
+
+  /* every hard shadow in the design is this colour */
+  --color-pixel-black: #0b0e0d;
+
+  /* Resolved from the variables astro:assets defines on :root for the self-hosted
+     families, so font-sans and font-mono keep working as the Tailwind defaults. */
+  --font-sans: var(--font-space-grotesk);
+  --font-mono: var(--font-space-mono);
+
   --breakpoint-news: 672px;
 }
 
@@ -144,16 +188,17 @@
   }
 
   html {
-    /* v2 was light-only; opt out of any dark-mode UA adaptation. */
+    /* The site is light and does not follow the reader's OS preference. Set on html
+       too so the UA paints cream during overscroll rather than white. */
     color-scheme: light;
+    background-color: var(--color-page);
   }
 
   body {
     line-height: 1;
     font-size: 100%;
-    font-family:
-      -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif,
-      'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+    background-color: var(--color-page);
+    font-family: var(--font-sans);
   }
 
   img {

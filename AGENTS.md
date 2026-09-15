@@ -2,7 +2,8 @@
 
 Astro 7, Tailwind v4, Markdown content collections, deployed to Netlify as a
 fully static site. Ported from the Gatsby blog at `itsmicaio/my-blog-v2`, keeping
-its URLs and visual design unchanged.
+its URLs unchanged. The v2 visual design has since been replaced by the dark
+"Emerald 8-Bit Arcade" identity.
 
 ## Tooling
 
@@ -50,9 +51,39 @@ scripts/           repo checks (post asset verification)
 ## Conventions
 
 - Site metadata lives in `src/consts.ts`; `astro.config.mjs` reads `site` from it.
-- The design is light-only, ported from v2: green `--color-green` (`#4e8663`) on
-  `text-gray-600` body copy, with a custom `news: 672px` breakpoint. There is no
-  dark mode and no theme toggle — do not reintroduce one without a spec change.
+- The design is light: a cream page (`--color-page`, `#f4f1ea`) with the header as a
+  full-bleed dark bar across the top. The "Emerald 8-Bit Arcade" palette lives in the
+  `@theme` block of `src/styles/global.css`, with a custom `news: 672px` breakpoint.
+  `--color-green` (`#4e8663`) is v2's accent and is still used by the post index,
+  linktree and post body until those surfaces adopt the new identity.
+- Token names and values come from the design system in `HEADER.HTML`, which is the
+  source of truth for the header. Two rules carry the 8-bit look: **corners are
+  square** (no `rounded` anywhere) and raised elements cast a **hard offset shadow**
+  in `--color-pixel-black` with no blur — the bar has `shadow-[0_4px_0_…]`, the
+  active nav pill `shadow-[2px_2px_0_…]`, the band's marker square
+  `shadow-[1px_1px_0_…]`.
+- The header has **two grounds**, and text tokens are legible only on their own. The
+  dark bar uses `--color-bright`, `--color-on-dark` and the recesses `--color-well`
+  / `--color-well-soft` / `--color-well-low`; the cream band uses
+  `--color-emerald-deep` on `--color-band` / `--color-band-raised`. Don't cross them,
+  and don't use either on the page. Frames are `--color-emerald-deep` and are
+  decorative — 1.82:1 on the bar — so a control must always be identifiable by its
+  label, never by its frame alone. One text pair has no headroom:
+  `--color-emerald-soft` on `--color-emerald-base` at 4.53:1. Don't nudge it.
+- The site does not follow the reader's OS colour preference, and there is no working
+  theme switch — the header's `[> CRT]` control is a deliberate disabled placeholder
+  whose eventual behaviour is still undecided. Don't implement one without a spec
+  change.
+- Header affordances all render through `BracketButton.astro`; its `variant` picks
+  the surface and shape (`nav`, `control`, `control-soft`, `band`). Placeholders
+  (`SOBRE`, `PT / EN`, `CRT`) are spans with `aria-disabled` and an explicit
+  `tabindex`, never `<button disabled>` — a disabled button leaves the tab order and
+  goes unannounced, hiding that the feature is planned. A placeholder mutes its
+  label to `--color-outline` but keeps its frame and recess at full strength;
+  dimming the whole element washes the borders out, and the frames are the design.
+- Space Grotesk (body/headings) and Space Mono (labels) are self-hosted through
+  Astro's top-level `fonts` config, so no third-party font request is made. Add a
+  weight there before using it.
 - Post body styling lives in `src/styles/content.css` under the `.mdx` class. It is
   global rather than scoped because it targets HTML generated from Markdown at
   build time. Inline code and code blocks deliberately inherit the body sans-serif

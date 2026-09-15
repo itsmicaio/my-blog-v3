@@ -1,0 +1,92 @@
+---
+// Every interactive affordance in the header. `variant` picks the surface it sits on and
+// the shape the design gives it — the three are not interchangeable, since each is
+// legible only against its own ground.
+//
+// Placeholders are spans carrying aria-disabled with an explicit tabindex rather than
+// <button disabled>: a disabled button leaves the tab order and is skipped by screen
+// readers, so a keyboard user would never discover the feature is planned.
+interface Props {
+  label: string;
+  variant?: 'nav' | 'control' | 'control-soft' | 'band';
+  href?: string;
+  external?: boolean;
+  disabled?: boolean;
+  bracketed?: boolean;
+  current?: boolean;
+  class?: string;
+}
+
+const {
+  label,
+  variant = 'nav',
+  href,
+  external = false,
+  disabled = false,
+  bracketed = false,
+  current = false,
+  class: className,
+} = Astro.props;
+
+// No rounding anywhere: square corners are the 8-bit look. justify-center only bites when
+// something stretches the button, as the band's mobile grid does.
+const base =
+  'inline-flex items-center justify-center gap-1 whitespace-nowrap font-mono uppercase transition-all';
+
+const hud = 'px-2 py-1 text-[13px] font-bold tracking-[0.08em]';
+
+const SIZES = {
+  nav: hud,
+  control: hud,
+  'control-soft': hud,
+  band: 'px-1.5 py-0.5 text-xs tracking-wider',
+};
+
+// A placeholder mutes its label to --color-outline but keeps its frame and recess at full
+// strength. Dimming the whole element instead would wash the borders out, and the frames
+// are the point of the design.
+const SKINS = {
+  // Sits inside the nav well. The active item is a filled pill with a hard shadow. The
+  // inactive border is transparent rather than absent so every item is the same size.
+  nav: disabled
+    ? 'border border-transparent text-outline'
+    : current
+      ? 'border-emerald-mint bg-emerald-base text-emerald-soft border shadow-[2px_2px_0_var(--color-pixel-black)]'
+      : 'border border-transparent text-on-dark hover:bg-emerald-base hover:text-emerald-soft',
+  // Its own recess with a heavy frame — the CRT control.
+  control: disabled
+    ? 'bg-well-low border-emerald-deep text-outline border-2'
+    : 'bg-well-low border-emerald-deep text-emerald-light border-2 hover:bg-emerald-deep hover:text-bright',
+  // Lighter recess with a hairline frame — the language switch.
+  'control-soft': disabled
+    ? 'bg-well-soft border-emerald-deep text-outline border'
+    : 'bg-well-soft border-emerald-deep text-on-dark border',
+  // On the cream band.
+  band: disabled
+    ? 'bg-band border-emerald-deep text-emerald-deep/50 border'
+    : 'bg-band-raised border-emerald-deep text-emerald-deep border hover:bg-band',
+};
+
+const skin = [SIZES[variant], SKINS[variant], disabled && 'cursor-not-allowed'];
+---
+
+{disabled ? (
+  <span class:list={[base, skin, className]} aria-disabled="true" tabindex="0" title="Em breve">
+    {bracketed && <span aria-hidden="true">[&gt;</span>}
+    <slot />
+    {label}
+    {bracketed && <span aria-hidden="true">]</span>}
+  </span>
+) : (
+  <a
+    class:list={[base, skin, className]}
+    href={href}
+    aria-current={current ? 'page' : undefined}
+    {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+  >
+    {bracketed && <span aria-hidden="true">[&gt;</span>}
+    <slot />
+    {label}
+    {bracketed && <span aria-hidden="true">]</span>}
+  </a>
+)}
