@@ -8,19 +8,27 @@ const posts = await getPublishedPosts();
 ---
 
 <BaseLayout title={`Home | ${SITE.title}`}>
-  <main class="flex flex-col items-center px-4 pb-10">
-    <section class="panel">
-      <div class="bar">
-        <h1>
-          <span class="glyph" aria-hidden="true"></span>
-          RECENT LOGS // ARTIGOS RECENTES
+  <main class="mx-auto flex w-full max-w-[1160px] flex-col gap-10 px-6 py-6">
+    <section class="flex flex-col gap-6">
+      <div class="border-emerald-deep flex items-center justify-between gap-4 border-b-4 pb-2">
+        <h1 class="text-emerald-deep flex items-start gap-2 text-2xl leading-8 font-semibold tracking-tight uppercase">
+          {/* mt-2 centres the 16px marker on a 32px first line, so it stays put when
+              the title wraps to two lines on a phone. */}
+          <span
+            class="bg-emerald-base border-pixel-black mt-2 inline-block h-4 w-4 shrink-0 border"
+            aria-hidden="true"
+          ></span>
+          Recent logs // Artigos recentes
         </h1>
-        <span class="hint" aria-hidden="true">
-          [SELECT POST WITH &lt;CR&gt;]
+        <span
+          class="text-emerald-deep news:inline hidden shrink-0 font-mono text-xs font-bold tracking-[0.08em] uppercase"
+          aria-hidden="true"
+        >
+          [Select post with &lt;CR&gt;]
         </span>
       </div>
 
-      <ul class="grid">
+      <ul class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {posts.map((post, index) => (
           <PostCard post={post} number={posts.length - index} />
         ))}
@@ -28,68 +36,3 @@ const posts = await getPublishedPosts();
     </section>
   </main>
 </BaseLayout>
-
-<style>
-  .panel {
-    width: 100%;
-    max-width: 72rem;
-    margin-top: 0.5rem;
-    border: 2px dashed color-mix(in srgb, var(--color-green) 40%, transparent);
-    background: #f3f1e7;
-    padding: 1rem;
-  }
-
-  .bar {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
-    border-bottom: 1px solid color-mix(in srgb, var(--color-green) 30%, transparent);
-    padding-bottom: 0.625rem;
-  }
-
-  .bar h1 {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: color-mix(in srgb, var(--color-green) 85%, black);
-  }
-
-  .glyph {
-    width: 0.5rem;
-    height: 0.5rem;
-    background: var(--color-green);
-  }
-
-  .hint {
-    font-family: var(--font-mono);
-    font-size: 0.625rem;
-    letter-spacing: 0.08em;
-    color: color-mix(in srgb, var(--color-green) 55%, transparent);
-  }
-
-  .grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 0.875rem;
-    padding-left: 0;
-  }
-
-  @media (min-width: 672px) {
-    .grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .grid {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-</style>
