@@ -5,31 +5,41 @@
      their light styling until those surfaces move to the new identity. */
   --color-green: #4e8663;
 
-  /* Emerald 8-Bit Arcade, sampled from the design. The page is cream; the header is a
-     full-bleed dark bar whose second row is a lighter cream band. Tokens are grouped by
-     the surface they are legible on — the `on dark` set is unreadable on the band or the
-     page, and vice versa. */
+  /* Emerald 8-Bit Arcade. Names and values come from the design system in HEADER.HTML.
+     Two rules carry the whole 8-bit look: corners are square, and raised elements cast a
+     hard offset shadow in --color-pixel-black with no blur. Don't round anything and
+     don't soften a shadow.
+
+     Grounds are grouped below, and the text tokens are legible only on their own ground:
+     the `on dark` set is unreadable on the band or the page, and vice versa. */
   --color-page: #f4f1ea;
 
-  /* header bar */
+  /* grounds */
   --color-header: #131b17;
-  --color-well: #0a0e14;
-  --color-well-soft: #1a2520;
-  --color-bright: #f7f9f6;
-  --color-on-dark: #bfc9c1;
-  --color-muted: #8c918e;
-
-  /* social band */
   --color-band: #dfd9cb;
   --color-band-raised: #eae5d9;
-  --color-band-border: #99a696;
-  --color-band-ink: #1e4d3a;
-  --color-rule: #285441;
 
-  /* greens */
-  --color-accent-dim: #2d6a4f;
-  --color-accent: #52b788;
-  --color-accent-soft: #a8e7c5;
+  /* recesses inset into the dark bar */
+  --color-well: #0a0e14;
+  --color-well-soft: #1a2520;
+  --color-well-low: #181c22;
+
+  /* emerald ramp, deep to light */
+  --color-emerald-deep: #1e4d3a;
+  --color-emerald-base: #2d6a4f;
+  --color-emerald-mid: #40916c;
+  --color-emerald-light: #52b788;
+  --color-emerald-mint: #74c69d;
+  --color-emerald-glow: #95d5b2;
+  --color-emerald-soft: #a8e7c5;
+
+  /* text */
+  --color-bright: #f7f9f6;
+  --color-on-dark: #bfc9c1;
+  --color-outline: #8a938c;
+
+  /* every hard shadow in the design is this colour */
+  --color-pixel-black: #0b0e0d;
 
   /* Resolved from the variables astro:assets defines on :root for the self-hosted
      families, so font-sans and font-mono keep working as the Tailwind defaults. */

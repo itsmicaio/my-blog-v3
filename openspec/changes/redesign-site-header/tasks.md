@@ -1,10 +1,9 @@
 ## 1. Design tokens and typography foundation
 
-- [x] 1.1 Add the brand palette (`#0D1117`, `#2D6A4F`, `#52B788`, `#D8F3DC`) and the derived
-      semantic tokens named in design.md (page, ink, surface, border, accent, accent-dim,
-      bright, body, muted) to the `@theme` block of `src/styles/global.css`, keeping
-      `--color-green` for the surfaces that still use it; verify `pnpm build` succeeds and
-      the generated CSS contains the new custom properties.
+- [x] 1.1 Add the design system's palette and names to the `@theme` block of
+      `src/styles/global.css` — grounds, recesses, the emerald ramp and `--color-pixel-black`
+      as listed in design.md — keeping `--color-green` for the surfaces that still use it;
+      verify `pnpm build` succeeds and the generated CSS contains the new custom properties.
 - [x] 1.2 Apply the cream page ground to `html` and `body` in the base layer of
       `src/styles/global.css`, keeping `color-scheme: light`; verify the page renders cream
       with no white flash on first paint and no background pattern.

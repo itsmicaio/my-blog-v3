@@ -7,63 +7,74 @@ const path = Astro.url.pathname;
 const isHome = path === '/' || path === '';
 ---
 
-<header class="bg-header border-b-rule border-b">
-  <div class="news:flex-row news:items-center news:justify-between mx-auto flex max-w-6xl flex-col gap-4 px-6 py-3">
-    <a class="flex items-center gap-3" href="/">
-      <img
-        class="h-10 w-10 shrink-0 rounded"
-        src={SITE.avatar}
-        alt={`Avatar ${SITE.author}`}
-        width="40"
-        height="40"
-      />
-      <span class="flex flex-col gap-1">
-        <span class="flex items-center gap-2">
-          <span class="text-bright font-bold tracking-wide uppercase">{SITE.author}</span>
-          <span class="border-accent-dim text-accent border px-1 font-mono text-[0.6rem]">
-            [1P]
+<header>
+  {/* relative + z-10 so the bar's hard shadow lands on top of the band below it. */}
+  <div class="bg-header border-emerald-deep relative z-10 border-b-2 shadow-[0_4px_0_var(--color-pixel-black)]">
+    <div class="news:h-20 news:flex-row news:items-center news:justify-between mx-auto flex max-w-[1160px] flex-col gap-4 px-6 py-4">
+      <a class="flex shrink-0 items-center gap-4" href="/">
+        <img
+          class="h-10 w-10 shrink-0"
+          src={SITE.avatar}
+          alt={`Avatar ${SITE.author}`}
+          width="40"
+          height="40"
+        />
+        <span class="flex flex-col">
+          <span class="flex items-center gap-1">
+            <span class="text-bright text-xl font-semibold tracking-tight uppercase">
+              {SITE.author}
+            </span>
+            <span class="bg-well-soft text-emerald-mint border-emerald-mid border px-1 py-0.5 font-mono text-[13px] font-bold tracking-[0.08em]">
+              [1P]
+            </span>
+          </span>
+          <span class="text-emerald-glow font-mono text-xs tracking-widest uppercase">
+            {SITE.tagline}
           </span>
         </span>
-        <span class="text-muted font-mono text-[0.6rem] tracking-[0.2em] uppercase">
-          {SITE.tagline}
-        </span>
-      </span>
-    </a>
+      </a>
 
-    <nav class="bg-well flex items-center gap-1 self-start rounded p-1" aria-label="Seções">
-      <BracketButton label="Artigos" href="/" bracketed={false} current={isHome} />
-      <BracketButton label="Sobre" bracketed={false} disabled />
-      <BracketButton label="RSS" href="/rss.xml" bracketed={false} />
-    </nav>
+      <nav
+        class="bg-well border-emerald-deep flex items-center gap-1 self-start border-2 p-1"
+        aria-label="Seções"
+      >
+        <BracketButton label="Artigos" href="/" current={isHome} />
+        <BracketButton label="Sobre" disabled />
+        <BracketButton label="RSS" href="/rss.xml" />
+      </nav>
 
-    <div class="flex items-center gap-2 self-start">
-      <BracketButton label="PT / EN" bracketed={false} disabled class="bg-well-soft" />
-      <BracketButton label="CRT" disabled class="bg-well-soft">
-        <svg
-          class="h-3 w-3"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          aria-hidden="true"
-          focusable="false"
-        >
-          <rect x="2" y="4" width="20" height="13" rx="1"></rect>
-          <path d="M8 21h8M12 17v4"></path>
-        </svg>
-      </BracketButton>
+      <div class="flex items-center gap-2 self-start">
+        <BracketButton label="PT / EN" variant="control-soft" disabled />
+        <BracketButton label="CRT" variant="control" disabled>
+          <svg
+            class="h-4 w-4"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <rect x="2" y="4" width="20" height="13"></rect>
+            <path d="M8 21h8M12 17v4"></path>
+          </svg>
+        </BracketButton>
+      </div>
     </div>
   </div>
 
-  <div class="bg-band border-t-well border-t-2">
-    <div class="news:flex-row news:items-center news:justify-between mx-auto flex max-w-6xl flex-col gap-2 px-6 py-0.5">
-      <span class="text-accent-dim flex shrink-0 items-center gap-2 font-mono text-[0.6rem] tracking-wider uppercase">
-        <span class="bg-accent-dim inline-block h-2 w-2" aria-hidden="true"></span>
+  <div class="bg-band border-emerald-deep border-b-2">
+    <div class="news:flex-row news:items-center news:justify-between mx-auto flex max-w-[1160px] flex-col gap-2 px-6 py-1">
+      <span class="text-emerald-deep flex shrink-0 items-center gap-2 font-mono text-xs font-bold tracking-wider uppercase">
+        <span
+          class="bg-emerald-base inline-block h-2.5 w-2.5 shadow-[1px_1px_0_var(--color-pixel-black)]"
+          aria-hidden="true"
+        ></span>
         Connect // Redes sociais
       </span>
       <div class="flex gap-2 overflow-x-auto">
         {SOCIAL_LINKS.map((link) => (
-          <BracketButton label={link.label} href={link.href} external onBand>
+          <BracketButton label={link.label} href={link.href} external variant="band" bracketed>
             <SocialIcon name={link.icon} class="h-3 w-3" />
           </BracketButton>
         ))}

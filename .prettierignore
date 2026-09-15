@@ -8,3 +8,11 @@ openspec/
 # Migrated post bodies are copied verbatim from the v2 blog; reformatting them
 # would alter rendered output and make the migration diff unreviewable.
 src/content/blog/
+
+# Design references exported from the mockup tool. Kept verbatim as the source of
+# truth for the header's colours and borders; the export is not valid HTML and
+# prettier cannot parse it.
+*.HTML
+
+# Scratch output from browser tooling.
+.playwright-mcp/

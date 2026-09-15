@@ -38,12 +38,18 @@ See proposal.md — Why. The constraints that shape the approach:
 
 ## Decisions
 
-### Tokens sampled from the design, grouped by the surface they live on
+### Tokens from the design system, grouped by the surface they live on
 
 The four-colour brand kit is not enough to build the header — it has no surface steps, no
-well colour behind the nav, and no muted text. Rather than guess at the intermediate
-values, they were read straight out of the design by decoding the PNG and sampling pixels,
-so `@theme` carries the artwork's actual colours.
+well colour behind the nav, and no muted text. The intermediate values were first recovered
+by decoding the mockup PNG and sampling pixels, then confirmed and named against the design
+system in `HEADER.HTML`, which is now the source of truth. `@theme` carries its values and
+its names verbatim.
+
+Two rules carry the whole 8-bit look and are easy to undo by habit: **corners are square**
+— nothing is rounded — and raised elements cast a **hard offset shadow** with no blur, in
+`--color-pixel-black`. The bar casts `0 4px`, the active nav pill `2px 2px`, the band's
+marker square `1px 1px`.
 
 The header has **two** grounds, and a token legible on one is illegible on the other. The
 tokens are therefore grouped by surface, and the group is the rule:
@@ -53,20 +59,24 @@ page           --color-page         #f4f1ea   the whole page
 
 header bar     --color-header       #131b17   the dark upper row
   (on dark)    --color-well         #0a0e14   nav group recess
-               --color-well-soft    #1a2520   disabled control recess
+               --color-well-soft    #1a2520   language control recess
+               --color-well-low     #181c22   CRT control recess
                --color-bright       #f7f9f6   author name
                --color-on-dark      #bfc9c1   nav items
-               --color-muted        #8c918e   tagline
+               --color-outline      #8a938c   placeholder labels
 
 social band    --color-band         #dfd9cb   the cream lower row
   (on light)   --color-band-raised  #eae5d9   button fill
-               --color-band-border  #99a696   button hairline
-               --color-band-ink     #1e4d3a   button label
-               --color-rule         #285441   the band's bottom edge
 
-greens         --color-accent-dim   #2d6a4f   active nav fill, band label
-               --color-accent       #52b788   hover
-               --color-accent-soft  #a8e7c5   label on the active fill
+emerald ramp   --color-emerald-deep  #1e4d3a  every frame; band text
+               --color-emerald-base  #2d6a4f  active nav fill, band marker
+               --color-emerald-mid   #40916c  the [1P] frame
+               --color-emerald-light #52b788  live control text
+               --color-emerald-mint  #74c69d  [1P] text, active pill frame
+               --color-emerald-glow  #95d5b2  tagline
+               --color-emerald-soft  #a8e7c5  label on the active fill
+
+               --color-pixel-black  #0b0e0d   every hard shadow
 ```
 
 *Alternative considered:* a single neutral ramp shared by both surfaces. Rejected — the
@@ -82,29 +92,32 @@ Every text pair in the design was measured. All clear AA, two only barely:
 | --- | --- | --- |
 | author name on bar | 16.57:1 | 4.5 |
 | nav item on well | 11.36:1 | 4.5 |
-| band label on fill | 7.67:1 | 4.5 |
-| tagline on bar | 5.48:1 | 4.5 |
-| band label on band | 4.54:1 | 4.5 |
-| active nav label on fill | 4.53:1 | 4.5 |
+| tagline on bar | 10.39:1 | 4.5 |
+| band button on fill | 7.67:1 | 4.5 |
+| [1P] on its recess | 7.75:1 | 4.5 |
+| band label on band | 6.85:1 | 4.5 |
+| active nav label on pill | 4.53:1 | 4.5 |
 
-The last two have almost no headroom: darkening the band or lightening the active fill by
-a step would drop them under. Treat those four values as fixed.
+Only the last has no headroom: lightening the active fill or darkening its label by a step
+drops it under. Treat that pair as fixed.
 
-`--color-band-border` is 1.81:1 against the band and `--color-accent-dim` is 2.96:1
-against the bar — both under the 3:1 that WCAG 1.4.11 asks for the *boundary* of a
-control. They are therefore decorative only: every affordance is identified by its label
-text, never by its frame. Keeping the sampled hexes exact was preferred over nudging them
-to clear a threshold they do not need to meet.
+Frames are `--color-emerald-deep`, which is 1.82:1 against the bar — well under the 3:1
+that WCAG 1.4.11 asks for the *boundary* of a control. They are therefore decorative: every
+affordance is identified by its label text, never by its frame. Keeping the design system's
+hexes exact was preferred over nudging them to clear a threshold they do not need to meet.
 
 ### Disabled controls are deliberately low-contrast
 
-`SOBRE`, `PT / EN` and `[> CRT]` render dimmed, below the AA floor. That is allowed —
-WCAG 1.4.3 exempts inactive controls — and it is what the design shows. The accessible
-affordance is not contrast but `aria-disabled` plus a preserved tab stop.
+The design draws `SOBRE`, `PT / EN` and `CRT` as live controls — `CRT` even in bright
+`#52b788`. They are placeholders here, because the features do not exist; that was an
+explicit instruction and it overrides the comp.
 
-Note the design renders `[> CRT]` in bright `#52b788`, as though live. It is dimmed here
-instead, because the feature does not exist; that was an explicit instruction and it
-overrides the comp.
+How they are dimmed matters. Fading the whole element also fades its frame, and the frames
+are the design — `BUTTONS-BORDERS-EFFECT.png` shows them crisp. So a placeholder keeps its
+recess and border at full strength and mutes only its label, to `--color-outline`. That
+lands at 5.0–6.1:1, comfortably legible, even though WCAG 1.4.3 exempts inactive controls
+from any minimum. The accessible affordance is still `aria-disabled` plus a preserved tab
+stop, not contrast.
 
 ### The page stays light, so the post surfaces are untouched
 
@@ -142,7 +155,7 @@ so it is removed rather than retuned.
 ### Disabled controls: `aria-disabled`, not `disabled`
 
 Placeholders render as `<span>` (or `<a>` without `href`) carrying `aria-disabled="true"`,
-a dimmed style, `cursor: not-allowed`, and `title="Em breve"`.
+a muted label, `cursor: not-allowed`, and `title="Em breve"`.
 
 A native `<button disabled>` was rejected: it drops out of the tab order and is skipped by
 screen readers, so a keyboard or screen-reader user would never learn the feature is
@@ -172,8 +185,8 @@ an unnecessary dependency given the built-in path.
   surface. `global.css` groups them by surface with a comment saying so; anything on the
   cream page keeps using `--color-green` and the existing greys until the post-list change
   replaces them.
-- **Primary green used for text by eye** → Documented in the table above; the semantic
-  token name `--color-accent-dim` signals structure-only at the call site.
+- **A frame colour used as text by eye** → `--color-emerald-deep` is 1.82:1 on the bar.
+  It appears only in `border-*` utilities, and the contrast table above records why.
 - **Token collision with the parallel post-list change** → Both changes will want to name
   the cream ground. This change defines `--color-page`; the merge should reconcile to one
   definition rather than two near-identical creams.

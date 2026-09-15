@@ -56,24 +56,31 @@ scripts/           repo checks (post asset verification)
   `@theme` block of `src/styles/global.css`, with a custom `news: 672px` breakpoint.
   `--color-green` (`#4e8663`) is v2's accent and is still used by the post index,
   linktree and post body until those surfaces adopt the new identity.
-- The header has **two grounds**, and the tokens are grouped by which one they are
-  legible on. The `header bar` group (`--color-header`, `--color-well`,
-  `--color-bright`, `--color-on-dark`, `--color-muted`) works only on the dark row;
-  the `social band` group (`--color-band`, `--color-band-raised`,
-  `--color-band-border`, `--color-band-ink`) only on the cream row. Don't cross them,
-  and don't use either on the page. `--color-band-border` (1.81:1) and
-  `--color-accent-dim` on the bar (2.96:1) are decorative frames only — never text,
-  and never the only thing identifying a control. Two text pairs sit at 4.53:1 and
-  4.54:1 with no headroom: `--color-accent-soft` on `--color-accent-dim`, and
-  `--color-accent-dim` on `--color-band`. Don't nudge those four values.
+- Token names and values come from the design system in `HEADER.HTML`, which is the
+  source of truth for the header. Two rules carry the 8-bit look: **corners are
+  square** (no `rounded` anywhere) and raised elements cast a **hard offset shadow**
+  in `--color-pixel-black` with no blur — the bar has `shadow-[0_4px_0_…]`, the
+  active nav pill `shadow-[2px_2px_0_…]`, the band's marker square
+  `shadow-[1px_1px_0_…]`.
+- The header has **two grounds**, and text tokens are legible only on their own. The
+  dark bar uses `--color-bright`, `--color-on-dark` and the recesses `--color-well`
+  / `--color-well-soft` / `--color-well-low`; the cream band uses
+  `--color-emerald-deep` on `--color-band` / `--color-band-raised`. Don't cross them,
+  and don't use either on the page. Frames are `--color-emerald-deep` and are
+  decorative — 1.82:1 on the bar — so a control must always be identifiable by its
+  label, never by its frame alone. One text pair has no headroom:
+  `--color-emerald-soft` on `--color-emerald-base` at 4.53:1. Don't nudge it.
 - The site does not follow the reader's OS colour preference, and there is no working
   theme switch — the header's `[> CRT]` control is a deliberate disabled placeholder
   whose eventual behaviour is still undecided. Don't implement one without a spec
   change.
-- Header placeholders (`SOBRE`, `PT / EN`, `[> CRT]`) render through
-  `BracketButton.astro` as spans with `aria-disabled` and an explicit `tabindex`,
-  never as `<button disabled>` — a disabled button leaves the tab order and goes
-  unannounced, hiding the fact that the feature is planned.
+- Header affordances all render through `BracketButton.astro`; its `variant` picks
+  the surface and shape (`nav`, `control`, `control-soft`, `band`). Placeholders
+  (`SOBRE`, `PT / EN`, `CRT`) are spans with `aria-disabled` and an explicit
+  `tabindex`, never `<button disabled>` — a disabled button leaves the tab order and
+  goes unannounced, hiding that the feature is planned. A placeholder mutes its
+  label to `--color-outline` but keeps its frame and recess at full strength;
+  dimming the whole element washes the borders out, and the frames are the design.
 - Space Grotesk (body/headings) and Space Mono (labels) are self-hosted through
   Astro's top-level `fonts` config, so no third-party font request is made. Add a
   weight there before using it.
