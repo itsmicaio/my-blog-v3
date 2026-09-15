@@ -35,6 +35,27 @@ See `proposal.md` — Why. The constraints that actually shape the approach:
 
 ## Decisions
 
+### Rebased onto the header redesign
+
+This change was written against a green `#4e8663` header bar and rebased after
+`redesign-site-header` landed on main. What that invalidated, and what it did not:
+
+- **Fonts**: main self-hosts Space Grotesk and Space Mono through Astro's top-level
+  `fonts` config and already defines `--font-mono` / `--font-sans`. The subset woff2 and
+  `@font-face` this change originally added were deleted as redundant — the cards now use
+  the inherited tokens, and card titles pick up Space Grotesk for free, which is what the
+  amended "Site visual identity" requirement asks for.
+- **Palette**: still `--color-green`. Main's own `@theme` comment reserves that token for
+  "the post index, linktree and post body, which keep their light styling until those
+  surfaces move to the new identity", so the interim choice below is sanctioned rather
+  than contradicted. Adopting the Emerald ramp for the cards is a follow-up decision.
+- **Panel fill**: the page is now cream `--color-page` (`#f4f1ea`), so the panel's own
+  `#f3f1e7` fill is effectively invisible and only its dashed border still frames the
+  grid. The near-white cards continue to read against the cream page.
+- **Hard shadows**: main established that raised elements cast their offset shadow in
+  `--color-pixel-black` with no blur. The card's hover shadow is still a green tint and
+  does not yet follow that convention.
+
 ### Derive every card colour from `--color-green: #4e8663`
 
 The brand kit proposes `#2D6A4F` / `#52B788` / `#D8F3DC`, but the header — which stays on
