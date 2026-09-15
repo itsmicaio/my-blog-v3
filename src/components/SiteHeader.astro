@@ -72,7 +72,9 @@ const isHome = path === '/' || path === '';
         ></span>
         Connect // Redes sociais
       </span>
-      <div class="flex gap-2 overflow-x-auto">
+      {/* Two columns on a phone so four links sit as a 2x2 block with nothing to
+          scroll; a single row once there is width for it. */}
+      <div class="news:flex grid grid-cols-2 gap-2">
         {SOCIAL_LINKS.map((link) => (
           <BracketButton label={link.label} href={link.href} external variant="band" bracketed>
             <SocialIcon name={link.icon} class="h-3 w-3" />

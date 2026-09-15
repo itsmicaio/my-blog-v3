@@ -28,8 +28,10 @@ const {
   class: className,
 } = Astro.props;
 
-// No rounding anywhere: square corners are the 8-bit look.
-const base = 'inline-flex items-center gap-1 whitespace-nowrap font-mono uppercase transition-all';
+// No rounding anywhere: square corners are the 8-bit look. justify-center only bites when
+// something stretches the button, as the band's mobile grid does.
+const base =
+  'inline-flex items-center justify-center gap-1 whitespace-nowrap font-mono uppercase transition-all';
 
 const hud = 'px-2 py-1 text-[13px] font-bold tracking-[0.08em]';
 

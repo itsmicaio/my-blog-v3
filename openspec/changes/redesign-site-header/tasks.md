@@ -60,8 +60,9 @@
 - [x] 4.1 Implement the stacking behaviour so the header's groups wrap to separate rows below
       the `news` breakpoint; verify at 375px that the groups stack and the page does not
       scroll horizontally.
-- [x] 4.2 Give the social row horizontal overflow scrolling so four buttons never widen the
-      page; verify at 320px that the row scrolls independently and the page does not.
+- [x] 4.2 Lay the profile links out as a two-column grid below the `news` breakpoint and a
+      single row above it, with no scrolling anywhere; verify at 320px that four buttons form
+      a 2x2 block, no label is clipped, and neither the page nor the band scrolls.
 - [x] 4.3 Confirm the header needs no client-side JavaScript; verify it renders and lays out
       identically with scripting disabled, and that the build output ships no new script
       beyond the existing analytics tag.

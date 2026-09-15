@@ -23,8 +23,10 @@ identifiable as unavailable to assistive technology, and SHALL remain reachable 
 keyboard so that its existence is discoverable rather than silent.
 
 At narrow viewport widths the header's groups SHALL stack vertically rather than
-overflow, and the header SHALL require no client-side scripting to render or to lay out
-at any width.
+overflow, and the profile links SHALL wrap onto multiple lines so that every one of them
+is visible at once. No part of the header SHALL require horizontal scrolling to reach a
+control. The header SHALL require no client-side scripting to render or to lay out at any
+width.
 
 #### Scenario: Header on a post page
 
@@ -68,6 +70,13 @@ at any width.
 
 - **WHEN** the header is viewed on a narrow phone viewport
 - **THEN** its groups stack vertically and the page does not scroll horizontally
+
+#### Scenario: Profile links on a narrow viewport
+
+- **WHEN** four profile links are configured and the header is viewed on a narrow phone
+  viewport
+- **THEN** all four are visible at once, wrapped onto two lines, with no horizontal
+  scrolling anywhere in the header
 
 #### Scenario: Scripting disabled
 

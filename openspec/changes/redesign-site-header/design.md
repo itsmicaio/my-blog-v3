@@ -161,12 +161,18 @@ A native `<button disabled>` was rejected: it drops out of the tab order and is 
 screen readers, so a keyboard or screen-reader user would never learn the feature is
 planned. The spec requires these controls stay reachable and be announced as unavailable.
 
-### Mobile: flex-wrap and a scrolling social row
+### Mobile: stacked groups and a 2x2 block of profile links
 
 The header is a flex column of two rows; each row is a flex container that wraps. Below the
-`news` breakpoint the groups stack. The social row gets `overflow-x: auto` so four
-bracketed buttons never force horizontal page scroll. No disclosure widget, no checkbox
-hack, no script.
+`news` breakpoint the groups stack. The profile links become a two-column grid, so the four
+of them read as a 2x2 block that fits without scrolling; above the breakpoint the grid
+becomes a single flex row. No disclosure widget, no checkbox hack, no script.
+
+*Alternative considered:* `overflow-x: auto` on the row, which was the first implementation.
+Rejected — it keeps the page from widening but hides links off the edge of a strip only
+~20px tall, where a horizontal scroll affordance is easy to miss entirely. The grid shows
+all four at once. Grid items stretch, so the buttons also come out equal-width, which suits
+the HUD look; `justify-center` on the affordance keeps their labels centred when stretched.
 
 ### Fonts self-hosted via Astro's `fonts` config
 
