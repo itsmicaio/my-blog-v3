@@ -1,5 +1,16 @@
 @import 'tailwindcss';
 
+/* Latin subset only; Latin-1 covers the Portuguese diacritics tag labels use.
+   Only the 400 weight ships, so mono text must never request bold — the browser
+   would synthesise it. */
+@font-face {
+  font-family: 'Space Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/space-mono-400-latin.woff2') format('woff2');
+}
+
 @theme {
   /* v2's accent. Still used by the post index, linktree and post body, which keep
      their light styling until those surfaces move to the new identity. */
@@ -47,6 +58,7 @@
   --font-mono: var(--font-space-mono);
 
   --breakpoint-news: 672px;
+  --font-mono: 'Space Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
 /* http://meyerweb.com/eric/tools/css/reset/

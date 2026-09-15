@@ -8,11 +8,88 @@ const posts = await getPublishedPosts();
 ---
 
 <BaseLayout title={`Home | ${SITE.title}`}>
-  <main class="flex flex-col items-center">
-    <ul class="w-full max-w-2xl pl-0">
-      {posts.map((post) => (
-        <PostCard post={post} />
-      ))}
-    </ul>
+  <main class="flex flex-col items-center px-4 pb-10">
+    <section class="panel">
+      <div class="bar">
+        <h1>
+          <span class="glyph" aria-hidden="true"></span>
+          RECENT LOGS // ARTIGOS RECENTES
+        </h1>
+        <span class="hint" aria-hidden="true">
+          [SELECT POST WITH &lt;CR&gt;]
+        </span>
+      </div>
+
+      <ul class="grid">
+        {posts.map((post, index) => (
+          <PostCard post={post} number={posts.length - index} />
+        ))}
+      </ul>
+    </section>
   </main>
 </BaseLayout>
+
+<style>
+  .panel {
+    width: 100%;
+    max-width: 72rem;
+    margin-top: 0.5rem;
+    border: 2px dashed color-mix(in srgb, var(--color-green) 40%, transparent);
+    background: #f3f1e7;
+    padding: 1rem;
+  }
+
+  .bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--color-green) 30%, transparent);
+    padding-bottom: 0.625rem;
+  }
+
+  .bar h1 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--color-green) 85%, black);
+  }
+
+  .glyph {
+    width: 0.5rem;
+    height: 0.5rem;
+    background: var(--color-green);
+  }
+
+  .hint {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    letter-spacing: 0.08em;
+    color: color-mix(in srgb, var(--color-green) 55%, transparent);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.875rem;
+    padding-left: 0;
+  }
+
+  @media (min-width: 672px) {
+    .grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>
