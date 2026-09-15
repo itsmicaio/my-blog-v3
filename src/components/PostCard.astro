@@ -1,5 +1,6 @@
 ---
-import { formatDate, type Post } from '../lib/posts';
+import TagList from './TagList.astro';
+import { excerpt, type Post } from '../lib/posts';
 
 interface Props {
   post: Post;
@@ -8,15 +9,15 @@ interface Props {
 const { post } = Astro.props;
 ---
 
-<li class="py-5">
-  <a href={`/blog/${post.id}/`} class="group block">
-    <h3 class="group-hover:text-accent font-medium transition-colors">
-      {post.data.title}
-      {post.data.draft && <span class="text-ink-muted ml-2 text-xs">(rascunho)</span>}
-    </h3>
-    <p class="text-ink-muted mt-1 line-clamp-2 text-sm">{post.data.description}</p>
-    <time datetime={post.data.pubDate.toISOString()} class="text-ink-muted mt-2 block text-xs">
-      {formatDate(post.data.pubDate)}
-    </time>
+<li class="news:px-0 group mb-2 w-full px-4 font-thin hover:bg-gray-200">
+  <a class="block py-4" href={`/post/${post.id}/`}>
+    <div class="news:flex-row flex flex-col">
+      <h2 class="group-hover:text-green mr-2 text-lg font-semibold">
+        {post.data.title}
+        {post.data.draft && <span class="ml-2 text-xs">(rascunho)</span>}
+      </h2>
+      <TagList tags={post.data.tags} maxTags={3} />
+    </div>
+    <p class="group-hover:text-green mt-2 mb-0 text-sm leading-5">{excerpt(post)}</p>
   </a>
 </li>

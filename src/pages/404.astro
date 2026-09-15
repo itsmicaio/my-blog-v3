@@ -1,11 +1,19 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../consts';
 ---
 
-<BaseLayout title="Página não encontrada">
-  <h1 class="text-3xl font-semibold tracking-tight">404</h1>
-  <p class="text-ink-muted mt-3">Essa página não existe (ou não existe mais).</p>
-  <a href="/" class="text-accent mt-8 inline-block text-sm hover:underline">
-    ← Voltar para o início
-  </a>
+<BaseLayout title={`Página não encontrada | ${SITE.title}`}>
+  <main class="flex flex-col items-center">
+    <div class="news:px-0 w-full max-w-2xl px-4">
+      <h1 class="text-2xl font-bold">Página não encontrada</h1>
+      <p class="mt-4 font-thin">Não consegui encontrar o que você estava procurando.</p>
+      <a
+        href="/"
+        class="border-green text-green mt-6 inline-block border-b border-dashed hover:opacity-80"
+      >
+        Voltar para a home
+      </a>
+    </div>
+  </main>
 </BaseLayout>

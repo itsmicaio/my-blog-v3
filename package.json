@@ -12,11 +12,12 @@
     "preview": "astro preview",
     "astro": "astro",
     "check": "astro check",
+    "check:assets": "node scripts/check-post-assets.mjs",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "verify": "pnpm format:check && pnpm lint && pnpm check"
+    "verify": "pnpm format:check && pnpm lint && pnpm check && pnpm check:assets"
   },
   "dependencies": {
     "@astrojs/markdown-satteri": "^0.4.1",

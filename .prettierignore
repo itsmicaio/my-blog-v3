@@ -4,3 +4,7 @@ dist/
 node_modules/
 pnpm-lock.yaml
 openspec/
+
+# Migrated post bodies are copied verbatim from the v2 blog; reformatting them
+# would alter rendered output and make the migration diff unreviewable.
+src/content/blog/

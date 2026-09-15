@@ -4,30 +4,15 @@ import PostCard from '../components/PostCard.astro';
 import { SITE } from '../consts';
 import { getPublishedPosts } from '../lib/posts';
 
-const posts = (await getPublishedPosts()).slice(0, 5);
+const posts = await getPublishedPosts();
 ---
 
-<BaseLayout>
-  <section class="mb-14">
-    <h1 class="text-3xl font-semibold tracking-tight sm:text-4xl">{SITE.title}</h1>
-    <p class="text-ink-muted mt-4 text-lg leading-relaxed">{SITE.description}</p>
-  </section>
-
-  <section>
-    <h2 class="text-ink-muted mb-6 text-sm font-medium tracking-wide uppercase">
-      Escritos recentes
-    </h2>
-    {posts.length === 0 ? (
-      <p class="text-ink-muted">Nenhum post publicado ainda.</p>
-    ) : (
-      <ul class="divide-edge divide-y">
-        {posts.map((post) => (
-          <PostCard post={post} />
-        ))}
-      </ul>
-    )}
-    <a href="/blog" class="text-accent mt-8 inline-block text-sm hover:underline">
-      Ver todos os posts →
-    </a>
-  </section>
+<BaseLayout title={`Home | ${SITE.title}`}>
+  <main class="flex flex-col items-center">
+    <ul class="w-full max-w-2xl pl-0">
+      {posts.map((post) => (
+        <PostCard post={post} />
+      ))}
+    </ul>
+  </main>
 </BaseLayout>

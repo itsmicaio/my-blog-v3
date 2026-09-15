@@ -1,0 +1,15 @@
+---
+type: blog
+title: Esse vai ser meu diário
+pubDate: 2023-05-26
+tags:
+  - aleatorio
+---
+Aqui vai ser meu diário, minha ideia aqui é *quase* todo dia postar um novo conhecimento. Coisa rapida mesmo, apenas uma introdução e link para outros posts.
+
+Então você pode esperar ver aqui:
+- Conhecimentos técnicos;
+- Links para documentações;
+- Aleatóriedades técnincas;
+- Ferramentas maravilhosas;
+- Qualquer outra merda que eu ache interessante trazer :D.

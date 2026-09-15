@@ -1,0 +1,16 @@
+---
+type: blog
+title: "Como se tornar um dev senior"
+pubDate: 2023-06-20
+tags:
+  - aleatorio
+---
+Bom esse título é um puta click bait, mas não encontrei nada melhor pra adicionar.
+
+Venho questionando com meu líder como me tornar um dev senior, para tentar me ajudar ele trouxe um [artigo do medium](https://skamille.medium.com/an-incomplete-list-of-skills-senior-engineers-need-beyond-coding-8ed4a521b29f) e pediu pra eu ler e resumir, então aqui está:
+
+Após ler algumas vezes (sim eu li bastante vezes), percebi que ser senior vai muito além de ser muito bom em código.
+Talvez ser muito bom em código nem seja o grande requisito pra um senior (e sim para um especialista).
+
+O texto trata de enfatizar que o ponto principal é **comunicar**. Você precisar saber defender suas ideias, precisa explicar coisas técnicas para pessoas leigas no assunto, precisa saber ensinar seu time além de ter que dar feedback a eles. 
+E é claro que ter um bom conhecimento técnico é importante para o nível, mas não é só isso.

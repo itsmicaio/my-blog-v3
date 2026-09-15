@@ -1,0 +1,38 @@
+---
+import { render } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import TagList from '../../components/TagList.astro';
+import { formatDate, getPublishedPosts, summary, type Post } from '../../lib/posts';
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const posts = await getPublishedPosts();
+  return posts.map((post) => ({ params: { id: post.id }, props: { post } }));
+};
+
+interface Props {
+  post: Post;
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<BaseLayout title={post.data.title} description={summary(post)}>
+  <article class="mb-7 flex w-full flex-col items-center pl-0">
+    <div class="w-full max-w-2xl">
+      <h1 class="news:mx-0 mx-4 text-2xl font-bold">{post.data.title}</h1>
+      <time datetime={post.data.pubDate.toISOString()} class="news:mx-0 mx-4 text-sm">
+        {formatDate(post.data.pubDate)}
+      </time>
+
+      <div class="mdx">
+        <Content />
+      </div>
+
+      <div class="news:mx-0 mx-4">
+        <TagList tags={post.data.tags} />
+      </div>
+    </div>
+  </article>
+</BaseLayout>

@@ -1,0 +1,54 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import TagList from '../components/TagList.astro';
+import SocialIcon from '../components/SocialIcon.astro';
+import { SITE, SOCIAL_LINKS } from '../consts';
+import { getArticles } from '../lib/posts';
+
+const articles = await getArticles(4);
+---
+
+<BaseLayout title={`Linktree | ${SITE.title}`} bare>
+  <div class="bg-green flex min-h-screen w-full flex-col items-center text-white">
+    <header class="py-2">
+      <a class="flex flex-col items-center justify-center gap-2" href="/">
+        <img
+          class="h-24 w-24 rounded-full border-[1px] border-solid border-white"
+          src={SITE.avatar}
+          alt={`Avatar ${SITE.author}`}
+          width="96"
+          height="96"
+        />
+        <span class="text-2xl text-white">{SITE.author}</span>
+      </a>
+      <div class="my-3 flex w-full justify-center gap-5">
+        {SOCIAL_LINKS.map((link) => (
+          <a href={link.href} target="_blank" rel="noopener noreferrer" aria-label={link.label}>
+            <SocialIcon name={link.icon} class="h-9 w-9" />
+          </a>
+        ))}
+      </div>
+    </header>
+
+    <main class="max-w-lg">
+      <div class="border-b border-solid px-1 pb-1">
+        <span class="text-lg">Últimos artigos</span>
+      </div>
+      <ul class="flex w-full flex-col items-center gap-2 pl-0">
+        {articles.map((post) => (
+          <li class="group w-full max-w-lg px-1 font-thin hover:bg-gray-200">
+            <a class="block py-4" href={`/post/${post.id}/`}>
+              <h2 class="group-hover:text-green mr-2 mb-2 font-semibold">{post.data.title}</h2>
+              <TagList tags={post.data.tags} maxTags={3} />
+            </a>
+          </li>
+        ))}
+      </ul>
+      <div class="flex w-full justify-center">
+        <a href="/" class="cursor-pointer underline">
+          Ver tudo
+        </a>
+      </div>
+    </main>
+  </div>
+</BaseLayout>

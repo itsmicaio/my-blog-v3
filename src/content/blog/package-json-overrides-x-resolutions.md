@@ -1,0 +1,17 @@
+---
+type: blog
+title: "package.json: overrides x resolutions"
+pubDate: 2023-06-06
+tags:
+  - nodejs
+---
+
+Eventualmente me deparo com problema de resolução de dependências na hora de executar um `yarn install`.
+
+Isso pode acontecer por exemplo por incompatibilidade de uma dependência sua com dependências de suas dependências, sim aqui estou falando das `peerDependencies`.
+
+Então para resolver, as pessoas geralmente sugerem que a gente use o `overrides` ou `resolutions` para forçar a versão da dependência que desejamos que seja instalada em nossos node_modules.
+
+### Mas qual a diferença entre eles?
+
+Basicamente o `overrides` será lido quando você está executando o NPM e o `resolutions` serve para o YARN. Então sempre adicione os dois ao seu `package.json` e evite que o problemas reapareça quando entrar alguem no time utilizando um gerenciador de pacotes diferente do seu!

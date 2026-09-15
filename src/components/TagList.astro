@@ -1,0 +1,25 @@
+---
+import { tagLabel } from '../lib/posts';
+
+interface Props {
+  tags: readonly string[];
+  maxTags?: number;
+}
+
+const { tags, maxTags } = Astro.props;
+
+const shown = maxTags === undefined ? tags : tags.slice(0, maxTags);
+const overflow = maxTags !== undefined && tags.length > maxTags ? tags.length - maxTags : 0;
+---
+
+<div class="flex items-center gap-2">
+  {shown.map((tag) => (
+    <span
+      class="group-hover:bg-green group-hover:text-gray-200 rounded-md bg-gray-600 p-1 text-xs font-bold text-white hover:bg-black"
+      aria-label={`Tag ${tag}`}
+    >
+      {tagLabel(tag)}
+    </span>
+  ))}
+  {overflow > 0 && <span>+{overflow}</span>}
+</div>
