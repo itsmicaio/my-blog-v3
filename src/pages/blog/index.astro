@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import { getPublishedPosts } from '../../lib/posts';
+
+const posts = await getPublishedPosts();
+---
+
+<BaseLayout title="Blog" description="Todos os posts publicados.">
+  <h1 class="mb-8 text-3xl font-semibold tracking-tight">Blog</h1>
+  {posts.length === 0 ? (
+    <p class="text-ink-muted">Nenhum post publicado ainda.</p>
+  ) : (
+    <ul class="divide-edge divide-y">
+      {posts.map((post) => (
+        <PostCard post={post} />
+      ))}
+    </ul>
+  )}
+</BaseLayout>

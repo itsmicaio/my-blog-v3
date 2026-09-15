@@ -1,0 +1,33 @@
+---
+title: 'Olá, mundo (de novo)'
+description: 'Post de exemplo da v3 — mostra frontmatter tipado, markdown e um componente React embutido no MDX.'
+pubDate: 2026-09-14
+tags: ['meta', 'astro']
+---
+
+import Counter from '../../components/Counter.tsx';
+
+Este post existe só para provar que o pipeline funciona de ponta a ponta:
+frontmatter validado por schema, markdown renderizado e ilhas React dentro do MDX.
+
+## Markdown normal
+
+Listas, links e código continuam funcionando como você espera:
+
+- item um
+- item dois com `código inline`
+- item três com [um link](https://docs.astro.build)
+
+```ts
+export function soma(a: number, b: number): number {
+  return a + b;
+}
+```
+
+## Um componente React no meio do texto
+
+O componente abaixo é uma ilha: o resto da página é HTML estático, só ele carrega JavaScript.
+
+<Counter client:visible />
+
+> Apague este arquivo quando escrever o primeiro post de verdade.
