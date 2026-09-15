@@ -19,5 +19,9 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
 
-  adapter: netlify(),
+  adapter: netlify({
+    // Edge function emulation needs a local Deno runtime we don't have, and this
+    // project defines none. Re-enable if a netlify/edge-functions/ dir ever lands.
+    devFeatures: { edgeFunctions: false, images: true, environmentVariables: false },
+  }),
 });
