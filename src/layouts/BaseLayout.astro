@@ -1,8 +1,9 @@
 ---
+import { Font } from 'astro:assets';
 import '../styles/global.css';
 import '../styles/content.css';
-import { SITE, SOCIAL_LINKS } from '../consts';
-import SocialIcon from '../components/SocialIcon.astro';
+import { SITE } from '../consts';
+import SiteHeader from '../components/SiteHeader.astro';
 
 interface Props {
   title?: string;
@@ -26,6 +27,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="canonical" href={canonical} />
     <link rel="alternate" type="application/rss+xml" title={SITE.title} href="/rss.xml" />
+    <Font cssVariable="--font-space-grotesk" preload />
+    <Font cssVariable="--font-space-mono" />
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     <meta name="google-site-verification" content={SITE.googleSiteVerification} />
@@ -52,32 +55,15 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     </script>
   </head>
   <body class="text-gray-600">
-    {!bare && (
+    {bare ? (
+      <slot />
+    ) : (
       <>
-        <header class="bg-green fixed top-0 left-0 flex w-full flex-col items-center shadow-md">
-          <a class="mt-1 flex items-center justify-center gap-3" href="/">
-            <img
-              class="h-14 w-14 rounded-full border-[1px] border-solid border-white"
-              src={SITE.avatar}
-              alt={`Avatar ${SITE.author}`}
-              width="56"
-              height="56"
-            />
-            <span class="max-w-xs text-2xl text-white">{SITE.author}</span>
-          </a>
-          <div class="my-2 flex w-full max-w-sm justify-between px-3 text-white">
-            {SOCIAL_LINKS.map((link) => (
-              <a href={link.href} target="_blank" rel="noopener noreferrer" class="flex">
-                <SocialIcon name={link.icon} class="mr-1 h-4 w-4 self-center" />
-                {link.label}
-              </a>
-            ))}
-          </div>
-        </header>
-        {/* Spacer matching the fixed header's height so content is never hidden. */}
-        <div class="h-28" />
+        <SiteHeader />
+        <div class="bg-page mx-auto min-h-screen max-w-6xl">
+          <slot />
+        </div>
       </>
     )}
-    <slot />
   </body>
 </html>

@@ -1,0 +1,72 @@
+---
+import { SITE, SOCIAL_LINKS } from '../consts';
+import SocialIcon from './SocialIcon.astro';
+import BracketButton from './BracketButton.astro';
+
+const path = Astro.url.pathname;
+const isHome = path === '/' || path === '';
+---
+
+<header class="border-accent-dim bg-surface mx-auto my-3 max-w-6xl rounded-lg border">
+  <div class="news:flex-row news:items-center news:justify-between flex flex-col gap-4 p-4">
+    <a class="flex items-center gap-3" href="/">
+      <img
+        class="h-12 w-12 shrink-0 rounded border border-accent-dim"
+        src={SITE.avatar}
+        alt={`Avatar ${SITE.author}`}
+        width="48"
+        height="48"
+      />
+      <span class="flex flex-col gap-1">
+        <span class="flex items-center gap-2">
+          <span class="text-bright text-lg font-bold tracking-wide uppercase">{SITE.author}</span>
+          <span class="border-accent text-accent border px-1 font-mono text-[0.6rem]">[1P]</span>
+        </span>
+        <span class="text-muted font-mono text-[0.65rem] tracking-[0.2em] uppercase">
+          {SITE.tagline}
+        </span>
+      </span>
+    </a>
+
+    <nav
+      class="border-accent-dim flex items-center gap-1 self-start rounded border p-1"
+      aria-label="Seções"
+    >
+      <BracketButton label="Artigos" href="/" bracketed={false} current={isHome} />
+      <BracketButton label="Sobre" bracketed={false} disabled class="border-transparent" />
+      <BracketButton label="RSS" href="/rss.xml" bracketed={false} class="border-transparent" />
+    </nav>
+
+    <div class="flex items-center gap-2 self-start">
+      <BracketButton label="PT / EN" bracketed={false} disabled />
+      <BracketButton label="CRT" disabled>
+        <svg
+          class="h-3 w-3"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <rect x="2" y="4" width="20" height="13" rx="1"></rect>
+          <path d="M8 21h8M12 17v4"></path>
+        </svg>
+      </BracketButton>
+    </div>
+  </div>
+
+  <div class="news:flex-row news:items-center news:justify-between border-border flex flex-col gap-2 border-t px-4 py-2">
+    <span class="text-muted flex shrink-0 items-center gap-2 font-mono text-[0.65rem] uppercase">
+      <span class="bg-accent inline-block h-2 w-2" aria-hidden="true"></span>
+      Connect // Redes sociais
+    </span>
+    <div class="flex gap-2 overflow-x-auto">
+      {SOCIAL_LINKS.map((link) => (
+        <BracketButton label={link.label} href={link.href} external>
+          <SocialIcon name={link.icon} class="h-3 w-3" />
+        </BracketButton>
+      ))}
+    </div>
+  </div>
+</header>

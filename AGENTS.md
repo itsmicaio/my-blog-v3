@@ -2,7 +2,8 @@
 
 Astro 7, Tailwind v4, Markdown content collections, deployed to Netlify as a
 fully static site. Ported from the Gatsby blog at `itsmicaio/my-blog-v2`, keeping
-its URLs and visual design unchanged.
+its URLs unchanged. The v2 visual design has since been replaced by the dark
+"Emerald 8-Bit Arcade" identity.
 
 ## Tooling
 
@@ -50,9 +51,27 @@ scripts/           repo checks (post asset verification)
 ## Conventions
 
 - Site metadata lives in `src/consts.ts`; `astro.config.mjs` reads `site` from it.
-- The design is light-only, ported from v2: green `--color-green` (`#4e8663`) on
-  `text-gray-600` body copy, with a custom `news: 672px` breakpoint. There is no
-  dark mode and no theme toggle — do not reintroduce one without a spec change.
+- The design is light: a cream reading column (`--color-page`) over a near-black
+  ground (`--color-ink`) that shows only in the page gutters, with the header as a
+  dark panel above it. The "Emerald 8-Bit Arcade" palette lives in the `@theme`
+  block of `src/styles/global.css`, with a custom `news: 672px` breakpoint.
+  `--color-green` (`#4e8663`) is v2's accent and is still used by the post index,
+  linktree and post body until those surfaces adopt the new identity.
+  The dark-surface text tokens (`bright`, `body`, `muted`) are measured against
+  `--color-ink` and are legible **only inside the header** — don't use them on the
+  cream column. `--color-accent-dim` (`#2d6a4f`) measures 2.96:1 on ink: decorative
+  frames and dividers only — never text, and never the only thing identifying a
+  control. The site does not follow the reader's OS colour preference, and there is
+  no working theme switch — the header's `[> CRT]` control is a deliberate disabled
+  placeholder whose eventual behaviour is still undecided. Don't implement one
+  without a spec change.
+- Header placeholders (`SOBRE`, `PT / EN`, `[> CRT]`) render through
+  `BracketButton.astro` as spans with `aria-disabled` and an explicit `tabindex`,
+  never as `<button disabled>` — a disabled button leaves the tab order and goes
+  unannounced, hiding the fact that the feature is planned.
+- Space Grotesk (body/headings) and Space Mono (labels) are self-hosted through
+  Astro's top-level `fonts` config, so no third-party font request is made. Add a
+  weight there before using it.
 - Post body styling lives in `src/styles/content.css` under the `.mdx` class. It is
   global rather than scoped because it targets HTML generated from Markdown at
   build time. Inline code and code blocks deliberately inherit the body sans-serif

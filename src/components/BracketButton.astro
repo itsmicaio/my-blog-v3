@@ -1,0 +1,53 @@
+---
+// Every interactive affordance in the header, in both its live and placeholder form.
+// Placeholders are spans carrying aria-disabled with an explicit tabindex rather than
+// <button disabled>: a disabled button leaves the tab order and is skipped by screen
+// readers, so a keyboard user would never discover the feature is planned.
+interface Props {
+  label: string;
+  href?: string;
+  external?: boolean;
+  disabled?: boolean;
+  bracketed?: boolean;
+  current?: boolean;
+  class?: string;
+}
+
+const {
+  label,
+  href,
+  external = false,
+  disabled = false,
+  bracketed = true,
+  current = false,
+  class: className,
+} = Astro.props;
+
+const base =
+  'inline-flex items-center gap-1 whitespace-nowrap border px-2 py-1 font-mono text-xs tracking-wider uppercase transition-colors';
+const live = current
+  ? 'border-accent bg-accent-dim/20 text-accent'
+  : 'border-border text-muted hover:border-accent hover:text-accent';
+const inert = 'border-border/60 text-muted cursor-not-allowed opacity-40';
+---
+
+{disabled ? (
+  <span class:list={[base, inert, className]} aria-disabled="true" tabindex="0" title="Em breve">
+    {bracketed && <span aria-hidden="true">[&gt;</span>}
+    <slot />
+    {label}
+    {bracketed && <span aria-hidden="true">]</span>}
+  </span>
+) : (
+  <a
+    class:list={[base, live, className]}
+    href={href}
+    aria-current={current ? 'page' : undefined}
+    {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+  >
+    {bracketed && <span aria-hidden="true">[&gt;</span>}
+    <slot />
+    {label}
+    {bracketed && <span aria-hidden="true">]</span>}
+  </a>
+)}
