@@ -1,23 +1,59 @@
 ---
 import TagList from './TagList.astro';
-import { excerpt, type Post } from '../lib/posts';
+import { excerpt, isoDate, readingTime, type Post } from '../lib/posts';
 
 interface Props {
   post: Post;
+  /** Ordinal counted from the oldest listed post; the caller owns the numbering. */
+  number: number;
 }
 
-const { post } = Astro.props;
+const { post, number } = Astro.props;
+const minutes = readingTime(post);
 ---
 
-<li class="news:px-0 group mb-2 w-full px-4 font-thin hover:bg-gray-200">
-  <a class="block py-4" href={`/post/${post.id}/`}>
-    <div class="news:flex-row flex flex-col">
-      <h2 class="group-hover:text-green mr-2 text-lg font-semibold">
-        {post.data.title}
-        {post.data.draft && <span class="ml-2 text-xs">(rascunho)</span>}
-      </h2>
-      <TagList tags={post.data.tags} maxTags={3} />
+<li class="flex">
+  {/* The whole card is one link, so the lift is driven from here and the title and
+      cue follow via group-hover / group-focus-visible. Only transform and box-shadow
+      animate — changing border width or padding would resize the card and shift its
+      whole row. */}
+  <a
+    class="group border-emerald-deep bg-bright flex w-full flex-col border-4 shadow-[4px_4px_0_var(--color-emerald-deep)] transition-[transform,box-shadow] hover:-translate-y-1 hover:shadow-[6px_6px_0_var(--color-emerald-deep)] focus-visible:-translate-y-1 focus-visible:shadow-[6px_6px_0_var(--color-emerald-deep)] motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:focus-visible:translate-y-0"
+    href={`/post/${post.id}/`}
+  >
+    <div class="bg-band border-emerald-deep flex items-center justify-between gap-2 border-b-2 px-4 py-1.5 font-mono text-xs font-bold tracking-[0.08em] uppercase">
+      <span class="text-emerald-deep flex items-center gap-2">
+        <span>
+          <span aria-hidden="true">&gt; </span>Post #{String(number).padStart(2, '0')}
+        </span>
+        {post.data.draft && <span class="bg-emerald-deep text-bright px-1">Rascunho</span>}
+      </span>
+      <span class="text-pixel-black whitespace-nowrap">{minutes} min read</span>
     </div>
-    <p class="group-hover:text-green mt-2 mb-0 text-sm leading-5">{excerpt(post)}</p>
+
+    <div class="flex flex-1 flex-col justify-between gap-4 p-4">
+      <div class="flex flex-col gap-2">
+        <TagList tags={post.data.tags} maxTags={3} variant="terminal" />
+
+        <h2 class="text-emerald-deep group-hover:text-emerald-mid group-focus-visible:text-emerald-mid line-clamp-2 text-xl leading-7 font-semibold tracking-tight uppercase">
+          {post.data.title}
+        </h2>
+
+        <p class="text-pixel-black line-clamp-3 text-sm leading-relaxed">{excerpt(post)}</p>
+      </div>
+
+      <div class="border-band flex items-center justify-between gap-2 border-t-2 pt-2 font-mono text-xs font-bold tracking-[0.08em] uppercase">
+        <time class="text-outline" datetime={post.data.pubDate.toISOString()}>
+          {isoDate(post.data.pubDate)}
+        </time>
+        {/* Decorative: the card is already one link, and a nested anchor is invalid. */}
+        <span
+          class="text-emerald-deep group-hover:text-emerald-mid group-focus-visible:text-emerald-mid"
+          aria-hidden="true"
+        >
+          Ler post &gt;
+        </span>
+      </div>
+    </div>
   </a>
 </li>

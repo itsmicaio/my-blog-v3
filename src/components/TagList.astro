@@ -4,22 +4,43 @@ import { tagLabel } from '../lib/posts';
 interface Props {
   tags: readonly string[];
   maxTags?: number;
+  /** `terminal` is the home page card treatment; post pages keep the default pills. */
+  variant?: 'pill' | 'terminal';
 }
 
-const { tags, maxTags } = Astro.props;
+const { tags, maxTags, variant = 'pill' } = Astro.props;
 
 const shown = maxTags === undefined ? tags : tags.slice(0, maxTags);
 const overflow = maxTags !== undefined && tags.length > maxTags ? tags.length - maxTags : 0;
+
+const chip =
+  'bg-band-raised text-emerald-deep border-emerald-deep border px-2 py-0.5 font-mono text-xs font-bold tracking-[0.08em] uppercase whitespace-nowrap';
 ---
 
-<div class="flex items-center gap-2">
-  {shown.map((tag) => (
-    <span
-      class="group-hover:bg-green group-hover:text-gray-200 rounded-md bg-gray-600 p-1 text-xs font-bold text-white hover:bg-black"
-      aria-label={`Tag ${tag}`}
-    >
-      {tagLabel(tag)}
-    </span>
-  ))}
-  {overflow > 0 && <span>+{overflow}</span>}
-</div>
+{variant === 'pill' ? (
+  <div class="flex items-center gap-2">
+    {shown.map((tag) => (
+      <span
+        class="group-hover:bg-green group-hover:text-gray-200 rounded-md bg-gray-600 p-1 text-xs font-bold text-white hover:bg-black"
+        aria-label={`Tag ${tag}`}
+      >
+        {tagLabel(tag)}
+      </span>
+    ))}
+    {overflow > 0 && <span>+{overflow}</span>}
+  </div>
+) : (
+  <div class="flex flex-wrap items-center gap-1.5">
+    {shown.map((tag) => (
+      <span class={chip} aria-label={`Tag ${tag}`}>
+        <span aria-hidden="true">&gt; </span>
+        {tagLabel(tag)}
+      </span>
+    ))}
+    {overflow > 0 && <span class={`${chip} border-dashed`}>+{overflow}</span>}
+  </div>
+)}
+
+{/* No <style> block on purpose: a scoped one would make Astro emit this component's
+    CSS and its data-astro-cid attributes onto post pages too, which render the pill
+    variant. Both variants are styled with utilities only. */}

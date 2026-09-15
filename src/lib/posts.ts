@@ -24,6 +24,11 @@ export function formatDate(date: Date, lang = 'pt-BR'): string {
   }).format(date);
 }
 
+/** Read in UTC like `formatDate`, so a card and its post page never disagree on the day. */
+export function isoDate(date: Date): string {
+  return date.toISOString().slice(0, 10);
+}
+
 function toPlainText(markdown: string): string {
   return (
     markdown
@@ -65,6 +70,19 @@ export function excerpt(post: Post, limit: number = EXCERPT_SHORT): string {
 
 export function summary(post: Post): string {
   return excerpt(post, EXCERPT_LONG);
+}
+
+const WORDS_PER_MINUTE = 200;
+
+/**
+ * Minutes of prose, reusing `toPlainText` so fenced code is excluded — a code-heavy
+ * post would otherwise be wildly overstated.
+ */
+export function readingTime(post: Post): number {
+  const words = toPlainText(post.body ?? '')
+    .split(/\s+/)
+    .filter(Boolean).length;
+  return Math.max(1, Math.round(words / WORDS_PER_MINUTE));
 }
 
 const TAG_LABELS: Record<string, string> = {

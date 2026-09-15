@@ -8,11 +8,31 @@ const posts = await getPublishedPosts();
 ---
 
 <BaseLayout title={`Home | ${SITE.title}`}>
-  <main class="flex flex-col items-center">
-    <ul class="w-full max-w-2xl pl-0">
-      {posts.map((post) => (
-        <PostCard post={post} />
-      ))}
-    </ul>
+  <main class="mx-auto flex w-full max-w-[1160px] flex-col gap-10 px-6 py-6">
+    <section class="flex flex-col gap-6">
+      <div class="border-emerald-deep flex items-center justify-between gap-4 border-b-4 pb-2">
+        <h1 class="text-emerald-deep flex items-start gap-2 text-2xl leading-8 font-semibold tracking-tight uppercase">
+          {/* mt-2 centres the 16px marker on a 32px first line, so it stays put when
+              the title wraps to two lines on a phone. */}
+          <span
+            class="bg-emerald-base border-pixel-black mt-2 inline-block h-4 w-4 shrink-0 border"
+            aria-hidden="true"
+          ></span>
+          Recent logs // Artigos recentes
+        </h1>
+        <span
+          class="text-emerald-deep news:inline hidden shrink-0 font-mono text-xs font-bold tracking-[0.08em] uppercase"
+          aria-hidden="true"
+        >
+          [Select post with &lt;CR&gt;]
+        </span>
+      </div>
+
+      <ul class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {posts.map((post, index) => (
+          <PostCard post={post} number={posts.length - index} />
+        ))}
+      </ul>
+    </section>
   </main>
 </BaseLayout>
