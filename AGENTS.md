@@ -51,20 +51,25 @@ scripts/           repo checks (post asset verification)
 ## Conventions
 
 - Site metadata lives in `src/consts.ts`; `astro.config.mjs` reads `site` from it.
-- The design is light: a cream reading column (`--color-page`) over a near-black
-  ground (`--color-ink`) that shows only in the page gutters, with the header as a
-  dark panel above it. The "Emerald 8-Bit Arcade" palette lives in the `@theme`
-  block of `src/styles/global.css`, with a custom `news: 672px` breakpoint.
+- The design is light: a cream page (`--color-page`, `#f4f1ea`) with the header as a
+  full-bleed dark bar across the top. The "Emerald 8-Bit Arcade" palette lives in the
+  `@theme` block of `src/styles/global.css`, with a custom `news: 672px` breakpoint.
   `--color-green` (`#4e8663`) is v2's accent and is still used by the post index,
   linktree and post body until those surfaces adopt the new identity.
-  The dark-surface text tokens (`bright`, `body`, `muted`) are measured against
-  `--color-ink` and are legible **only inside the header** — don't use them on the
-  cream column. `--color-accent-dim` (`#2d6a4f`) measures 2.96:1 on ink: decorative
-  frames and dividers only — never text, and never the only thing identifying a
-  control. The site does not follow the reader's OS colour preference, and there is
-  no working theme switch — the header's `[> CRT]` control is a deliberate disabled
-  placeholder whose eventual behaviour is still undecided. Don't implement one
-  without a spec change.
+- The header has **two grounds**, and the tokens are grouped by which one they are
+  legible on. The `header bar` group (`--color-header`, `--color-well`,
+  `--color-bright`, `--color-on-dark`, `--color-muted`) works only on the dark row;
+  the `social band` group (`--color-band`, `--color-band-raised`,
+  `--color-band-border`, `--color-band-ink`) only on the cream row. Don't cross them,
+  and don't use either on the page. `--color-band-border` (1.81:1) and
+  `--color-accent-dim` on the bar (2.96:1) are decorative frames only — never text,
+  and never the only thing identifying a control. Two text pairs sit at 4.53:1 and
+  4.54:1 with no headroom: `--color-accent-soft` on `--color-accent-dim`, and
+  `--color-accent-dim` on `--color-band`. Don't nudge those four values.
+- The site does not follow the reader's OS colour preference, and there is no working
+  theme switch — the header's `[> CRT]` control is a deliberate disabled placeholder
+  whose eventual behaviour is still undecided. Don't implement one without a spec
+  change.
 - Header placeholders (`SOBRE`, `PT / EN`, `[> CRT]`) render through
   `BracketButton.astro` as spans with `aria-disabled` and an explicit `tabindex`,
   never as `<button disabled>` — a disabled button leaves the tab order and goes

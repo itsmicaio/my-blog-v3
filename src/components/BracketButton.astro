@@ -1,5 +1,8 @@
 ---
-// Every interactive affordance in the header, in both its live and placeholder form.
+// Every interactive affordance in the header, in both its live and placeholder form,
+// on either of the header's two surfaces. `onBand` switches to the cream social band's
+// palette; the default styling is legible only on the dark bar.
+//
 // Placeholders are spans carrying aria-disabled with an explicit tabindex rather than
 // <button disabled>: a disabled button leaves the tab order and is skipped by screen
 // readers, so a keyboard user would never discover the feature is planned.
@@ -10,6 +13,7 @@ interface Props {
   disabled?: boolean;
   bracketed?: boolean;
   current?: boolean;
+  onBand?: boolean;
   class?: string;
 }
 
@@ -20,19 +24,36 @@ const {
   disabled = false,
   bracketed = true,
   current = false,
+  onBand = false,
   class: className,
 } = Astro.props;
 
+// The band is a thin utility strip, so its affordances sit tighter than the bar's.
 const base =
-  'inline-flex items-center gap-1 whitespace-nowrap border px-2 py-1 font-mono text-xs tracking-wider uppercase transition-colors';
-const live = current
-  ? 'border-accent bg-accent-dim/20 text-accent'
-  : 'border-border text-muted hover:border-accent hover:text-accent';
-const inert = 'border-border/60 text-muted cursor-not-allowed opacity-40';
+  'inline-flex items-center gap-1 whitespace-nowrap rounded px-2 font-mono tracking-wider uppercase transition-colors';
+const size = onBand ? 'py-0.5 text-[0.6rem]' : 'py-1 text-xs';
+
+let variant;
+if (onBand) {
+  variant = disabled
+    ? 'border-band-border text-band-ink cursor-not-allowed border opacity-40'
+    : 'bg-band-raised border-band-border text-band-ink hover:border-accent-dim border';
+} else if (current) {
+  variant = 'bg-accent-dim text-accent-soft';
+} else if (disabled) {
+  variant = 'text-on-dark cursor-not-allowed opacity-40';
+} else {
+  variant = 'text-on-dark hover:text-accent';
+}
 ---
 
 {disabled ? (
-  <span class:list={[base, inert, className]} aria-disabled="true" tabindex="0" title="Em breve">
+  <span
+    class:list={[base, size, variant, className]}
+    aria-disabled="true"
+    tabindex="0"
+    title="Em breve"
+  >
     {bracketed && <span aria-hidden="true">[&gt;</span>}
     <slot />
     {label}
@@ -40,7 +61,7 @@ const inert = 'border-border/60 text-muted cursor-not-allowed opacity-40';
   </span>
 ) : (
   <a
-    class:list={[base, live, className]}
+    class:list={[base, size, variant, className]}
     href={href}
     aria-current={current ? 'page' : undefined}
     {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}

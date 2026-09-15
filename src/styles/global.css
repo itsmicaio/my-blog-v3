@@ -5,20 +5,31 @@
      their light styling until those surfaces move to the new identity. */
   --color-green: #4e8663;
 
-  /* Emerald 8-Bit Arcade. The header is a dark panel; the reading column is cream,
-     and --color-ink shows through only in the gutters beside it. The text tokens
-     below are measured against --color-ink, so they belong inside the header.
-     --color-accent-dim is 2.96:1 there — decorative framing only, never text and
-     never the sole cue identifying a control. */
-  --color-page: #f2eee3;
-  --color-ink: #0d1117;
-  --color-surface: #121a17;
-  --color-border: #1f3a2c;
+  /* Emerald 8-Bit Arcade, sampled from the design. The page is cream; the header is a
+     full-bleed dark bar whose second row is a lighter cream band. Tokens are grouped by
+     the surface they are legible on — the `on dark` set is unreadable on the band or the
+     page, and vice versa. */
+  --color-page: #f4f1ea;
+
+  /* header bar */
+  --color-header: #131b17;
+  --color-well: #0a0e14;
+  --color-well-soft: #1a2520;
+  --color-bright: #f7f9f6;
+  --color-on-dark: #bfc9c1;
+  --color-muted: #8c918e;
+
+  /* social band */
+  --color-band: #dfd9cb;
+  --color-band-raised: #eae5d9;
+  --color-band-border: #99a696;
+  --color-band-ink: #1e4d3a;
+  --color-rule: #285441;
+
+  /* greens */
   --color-accent-dim: #2d6a4f;
   --color-accent: #52b788;
-  --color-bright: #d8f3dc;
-  --color-body: #b8cbbe;
-  --color-muted: #8fa99b;
+  --color-accent-soft: #a8e7c5;
 
   /* Resolved from the variables astro:assets defines on :root for the self-hosted
      families, so font-sans and font-mono keep working as the Tailwind defaults. */
@@ -167,20 +178,16 @@
   }
 
   html {
-    /* Light reading column; the site does not follow the reader's OS preference.
-       Set on html too so the UA paints the ink ground during overscroll. */
+    /* The site is light and does not follow the reader's OS preference. Set on html
+       too so the UA paints cream during overscroll rather than white. */
     color-scheme: light;
-    background-color: var(--color-ink);
+    background-color: var(--color-page);
   }
 
-  /* The punch-card gutter. It sits behind everything and is only visible either side
-     of the cream column and around the header panel. */
   body {
     line-height: 1;
     font-size: 100%;
-    background-color: var(--color-ink);
-    background-image: radial-gradient(var(--color-border) 1px, transparent 1px);
-    background-size: 12px 12px;
+    background-color: var(--color-page);
     font-family: var(--font-sans);
   }
 

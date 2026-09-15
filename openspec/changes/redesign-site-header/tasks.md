@@ -5,9 +5,9 @@
       bright, body, muted) to the `@theme` block of `src/styles/global.css`, keeping
       `--color-green` for the surfaces that still use it; verify `pnpm build` succeeds and
       the generated CSS contains the new custom properties.
-- [x] 1.2 Apply the ink ground and its dot pattern to `body` in the base layer of
-      `src/styles/global.css`, keeping `color-scheme: light`; verify the gutters render dark
-      and dotted with no flash on first paint.
+- [x] 1.2 Apply the cream page ground to `html` and `body` in the base layer of
+      `src/styles/global.css`, keeping `color-scheme: light`; verify the page renders cream
+      with no white flash on first paint and no background pattern.
 - [x] 1.3 Add the top-level `fonts` block to `astro.config.mjs` using `fontProviders.google()`
       for Space Grotesk and Space Mono, restricted to the Latin subset and only the weights
       the design uses, with `display: swap` and explicit fallback stacks; verify the build
@@ -42,8 +42,9 @@
 - [x] 2.9 Build the second row: the filled marker plus "CONNECT // REDES SOCIAIS" label and
       the four social buttons, each opening in a new tab with `rel="noopener noreferrer"`;
       verify a click opens the profile in a new tab.
-- [x] 2.10 Assemble the two rows into the bordered, inset, rounded panel with the dotted
-      page-edge treatment; verify it matches the intended composition at desktop width.
+- [x] 2.10 Assemble the two rows into a full-bleed bar — dark upper row, cream social band,
+      no surrounding border — with colours sampled from the design; verify the rendered
+      output matches the sampled hexes and the bar:band height ratio is close to the comp.
 
 ## 3. Layout integration
 
@@ -66,19 +67,18 @@
       identically with scripting disabled, and that the build output ships no new script
       beyond the existing analytics tag.
 
-## 5. Reading column
+## 5. Page ground
 
 Groups 5 and 6 as originally written assumed the whole site went dark. It does not — the
-mockups show a dark header above a cream reading column — so the post surfaces need no
+mockups show a full-bleed dark header bar on a cream page — so the post surfaces need no
 colour work and are left to the parallel `redesign-post-list-cards` change. See design.md,
-"The reading column stays light".
+"The page stays light".
 
 - [x] 5.1 Retain `--color-green` in `@theme` so `PostCard.astro`, `TagList.astro`,
       `linktree.astro` and `content.css` keep rendering unchanged; verify those four files
       are untouched in the diff and the post index still styles correctly.
-- [x] 5.2 Wrap the layout slot in the cream reading column over the ink gutter ground;
-      verify the column renders cream, the gutters show the dot pattern, and `/linktree`
-      still bypasses it via `bare`.
+- [x] 5.2 Set the cream page ground globally rather than wrapping the slot in a column;
+      verify every page renders cream and `/linktree` still bypasses the header via `bare`.
 - ~~5.3 Re-point `linktree.astro`~~ — not needed; `--color-green` is retained.
 - ~~5.4 Grep for remaining light-scheme utilities~~ — not needed; the column stays light.
 

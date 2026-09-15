@@ -7,39 +7,38 @@ const path = Astro.url.pathname;
 const isHome = path === '/' || path === '';
 ---
 
-<header class="border-accent-dim bg-surface mx-auto my-3 max-w-6xl rounded-lg border">
-  <div class="news:flex-row news:items-center news:justify-between flex flex-col gap-4 p-4">
+<header class="bg-header border-b-rule border-b">
+  <div class="news:flex-row news:items-center news:justify-between mx-auto flex max-w-6xl flex-col gap-4 px-6 py-3">
     <a class="flex items-center gap-3" href="/">
       <img
-        class="h-12 w-12 shrink-0 rounded border border-accent-dim"
+        class="h-10 w-10 shrink-0 rounded"
         src={SITE.avatar}
         alt={`Avatar ${SITE.author}`}
-        width="48"
-        height="48"
+        width="40"
+        height="40"
       />
       <span class="flex flex-col gap-1">
         <span class="flex items-center gap-2">
-          <span class="text-bright text-lg font-bold tracking-wide uppercase">{SITE.author}</span>
-          <span class="border-accent text-accent border px-1 font-mono text-[0.6rem]">[1P]</span>
+          <span class="text-bright font-bold tracking-wide uppercase">{SITE.author}</span>
+          <span class="border-accent-dim text-accent border px-1 font-mono text-[0.6rem]">
+            [1P]
+          </span>
         </span>
-        <span class="text-muted font-mono text-[0.65rem] tracking-[0.2em] uppercase">
+        <span class="text-muted font-mono text-[0.6rem] tracking-[0.2em] uppercase">
           {SITE.tagline}
         </span>
       </span>
     </a>
 
-    <nav
-      class="border-accent-dim flex items-center gap-1 self-start rounded border p-1"
-      aria-label="Seções"
-    >
+    <nav class="bg-well flex items-center gap-1 self-start rounded p-1" aria-label="Seções">
       <BracketButton label="Artigos" href="/" bracketed={false} current={isHome} />
-      <BracketButton label="Sobre" bracketed={false} disabled class="border-transparent" />
-      <BracketButton label="RSS" href="/rss.xml" bracketed={false} class="border-transparent" />
+      <BracketButton label="Sobre" bracketed={false} disabled />
+      <BracketButton label="RSS" href="/rss.xml" bracketed={false} />
     </nav>
 
     <div class="flex items-center gap-2 self-start">
-      <BracketButton label="PT / EN" bracketed={false} disabled />
-      <BracketButton label="CRT" disabled>
+      <BracketButton label="PT / EN" bracketed={false} disabled class="bg-well-soft" />
+      <BracketButton label="CRT" disabled class="bg-well-soft">
         <svg
           class="h-3 w-3"
           viewBox="0 0 24 24"
@@ -56,17 +55,19 @@ const isHome = path === '/' || path === '';
     </div>
   </div>
 
-  <div class="news:flex-row news:items-center news:justify-between border-border flex flex-col gap-2 border-t px-4 py-2">
-    <span class="text-muted flex shrink-0 items-center gap-2 font-mono text-[0.65rem] uppercase">
-      <span class="bg-accent inline-block h-2 w-2" aria-hidden="true"></span>
-      Connect // Redes sociais
-    </span>
-    <div class="flex gap-2 overflow-x-auto">
-      {SOCIAL_LINKS.map((link) => (
-        <BracketButton label={link.label} href={link.href} external>
-          <SocialIcon name={link.icon} class="h-3 w-3" />
-        </BracketButton>
-      ))}
+  <div class="bg-band border-t-well border-t-2">
+    <div class="news:flex-row news:items-center news:justify-between mx-auto flex max-w-6xl flex-col gap-2 px-6 py-0.5">
+      <span class="text-accent-dim flex shrink-0 items-center gap-2 font-mono text-[0.6rem] tracking-wider uppercase">
+        <span class="bg-accent-dim inline-block h-2 w-2" aria-hidden="true"></span>
+        Connect // Redes sociais
+      </span>
+      <div class="flex gap-2 overflow-x-auto">
+        {SOCIAL_LINKS.map((link) => (
+          <BracketButton label={link.label} href={link.href} external onBand>
+            <SocialIcon name={link.icon} class="h-3 w-3" />
+          </BracketButton>
+        ))}
+      </div>
     </div>
   </div>
 </header>

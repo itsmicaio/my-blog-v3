@@ -55,15 +55,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     </script>
   </head>
   <body class="text-gray-600">
-    {bare ? (
-      <slot />
-    ) : (
-      <>
-        <SiteHeader />
-        <div class="bg-page mx-auto min-h-screen max-w-6xl">
-          <slot />
-        </div>
-      </>
-    )}
+    {!bare && <SiteHeader />}
+    <slot />
   </body>
 </html>

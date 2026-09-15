@@ -12,9 +12,9 @@ short of the post index, which has its own mockup and will follow as a separate 
 
 ## What Changes
 
-- **BREAKING (visual):** The page gains the Emerald identity: a cream reading column over
-  a near-black gutter ground, with the header as a dark panel above it. The site stays a
-  single light scheme — it does not become dark.
+- **BREAKING (visual):** The page gains the Emerald identity: a cream page with the header
+  as a full-bleed dark bar across the top, its second row a lighter cream band. The site
+  stays a single light scheme — it does not become dark.
 - The Emerald palette is added as semantic tokens alongside the existing
   `--color-green` (`#4e8663`), which the post index, linktree and post body keep using
   until those surfaces adopt the new identity in their own change.
@@ -32,7 +32,6 @@ short of the post index, which has its own mockup and will follow as a separate 
   visible but disabled placeholders. None of them have an implementation behind them, and
   none is promised by this change.
 - A fourth social link, YouTube, joins GitHub, LinkedIn and Instagram.
-- A decorative dotted page-edge treatment frames the content column.
 
 ## Capabilities
 
@@ -46,8 +45,8 @@ None. This change modifies an existing capability only.
   - **Site visual identity** — currently mandates a single light scheme on green
     `#4e8663` and forbids any theme toggle outright, with a scenario asserting that no
     theme control is offered. It stays a single light scheme but is restated on the
-    Emerald palette — a cream reading column over a near-black gutter ground, with a dark
-    header panel — and now permits a disabled display-mode placeholder. The existing
+    Emerald palette — a cream page with a full-bleed dark header bar whose second row is a
+    cream band — and now permits a disabled display-mode placeholder. The existing
     guarantees that the site does not follow the reader's OS colour preference and stays
     legible on mobile without horizontal scroll are retained.
   - **Persistent site header** — currently specifies avatar, name and three profile
@@ -60,11 +59,11 @@ None. This change modifies an existing capability only.
 **Code**
 
 - `src/layouts/BaseLayout.astro` — header markup replaced; fixed positioning and the
-  hardcoded spacer removed; the slot is wrapped in the cream reading column.
+  hardcoded spacer removed.
 - `src/components/` — a new header component (and its sub-parts) is introduced;
   `SocialIcon.astro` gains a YouTube glyph.
-- `src/styles/global.css` — Emerald tokens added alongside `--color-green`, the gutter
-  ground and dot pattern applied to `body`, font families wired in.
+- `src/styles/global.css` — Emerald tokens added alongside `--color-green`, the cream page
+  ground applied to `html` and `body`, font families wired in.
 - `src/consts.ts` — a `tagline` field is added to `SITE`; `SOCIAL_LINKS` gains a YouTube
   entry and is reordered to match the design.
 - `astro.config.mjs` — a top-level `fonts` block is added.

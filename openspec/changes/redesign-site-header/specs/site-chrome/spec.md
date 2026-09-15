@@ -4,10 +4,12 @@
 
 Every page other than the linktree SHALL display a header containing the author's avatar,
 the author's name, a short tagline, a navigation group, a set of profile links, and
-placeholder controls for features not yet built. The header SHALL be a dark panel sitting
-at the top of the page content, above the cream reading column. It SHALL scroll with the
-page; it SHALL NOT be pinned to the viewport, and SHALL NOT obscure page content at any
-scroll position.
+placeholder controls for features not yet built. The header SHALL be a full-bleed bar at
+the top of the page, spanning the viewport edge to edge with no surrounding border or
+frame, arranged as two rows: a dark upper row carrying the brand, navigation and
+controls, and a lighter band beneath it carrying the profile links. It SHALL scroll with
+the page; it SHALL NOT be pinned to the viewport, and SHALL NOT obscure page content at
+any scroll position.
 
 The avatar and name SHALL link to the home page. The navigation group SHALL offer a link
 to the home page, marked as the current section when the reader is on it, and a link to
@@ -74,14 +76,14 @@ at any width.
 
 ### Requirement: Site visual identity
 
-The site SHALL render in a single light colour scheme: a cream reading column
-(`#F2EEE3`) laid over a near-black ground (`#0D1117`) that is visible only in the page
-gutters, with emerald accents (`#2D6A4F`, `#52B788`) and a pale mint for high-contrast
-detail on dark surfaces (`#D8F3DC`). The header SHALL be a dark panel against that
-ground, providing the site's principal contrast with the reading column beneath it.
-Headings and body copy SHALL be set in Space Grotesk and labels in Space Mono, and these
-typefaces SHALL be served from the site's own origin so that rendering a page requires no
-third-party font request.
+The site SHALL render in a single light colour scheme on a cream page (`#F4F1EA`), with
+emerald accents (`#2D6A4F`, `#52B788`). The header SHALL supply the site's principal
+contrast as a dark bar (`#131B17`) whose second row is a lighter cream band (`#DFD9CB`).
+Colours intended for dark surfaces SHALL be confined to the header bar, and colours
+intended for light surfaces SHALL be confined to the band and the page, so that no text
+is placed on a ground it was not measured against. Headings and body copy SHALL be set in
+Space Grotesk and labels in Space Mono, and these typefaces SHALL be served from the
+site's own origin so that rendering a page requires no third-party font request.
 
 The site SHALL NOT offer a working theme or colour-scheme choice, and SHALL NOT vary its
 appearance with the reader's operating-system colour preference. A disabled display-mode
@@ -98,7 +100,7 @@ desktop.
 #### Scenario: Reader prefers dark mode
 
 - **WHEN** a reader whose system is set to dark mode opens any page
-- **THEN** the site renders in its one scheme, unchanged — the reading column stays cream
+- **THEN** the site renders in its one scheme, unchanged — the page stays cream
 
 #### Scenario: No theme control is present
 
