@@ -59,9 +59,8 @@ scripts/           repo checks (post asset verification)
 - Token names and values come from the design system in `HEADER.HTML`, which is the
   source of truth for the header. Two rules carry the 8-bit look: **corners are
   square** (no `rounded` anywhere) and raised elements cast a **hard offset shadow**
-  in `--color-pixel-black` with no blur — the bar has `shadow-[0_4px_0_…]`, the
-  active nav pill `shadow-[2px_2px_0_…]`, the band's marker square
-  `shadow-[1px_1px_0_…]`.
+  in `--color-pixel-black` with no blur — the bar has `shadow-[0_4px_0_…]` and the
+  active nav pill `shadow-[2px_2px_0_…]`.
 - The header has **two grounds**, and text tokens are legible only on their own. The
   dark bar uses `--color-bright`, `--color-on-dark` and the recesses `--color-well`
   / `--color-well-soft` / `--color-well-low`; the cream band uses

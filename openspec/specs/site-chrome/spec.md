@@ -21,8 +21,9 @@ any scroll position.
 
 The avatar and name SHALL link to the home page. The navigation group SHALL offer a link
 to the home page, marked as the current section when the reader is on it, and a link to
-the site's RSS feed. Profile links SHALL point to the author's GitHub, LinkedIn,
-Instagram and YouTube presences, and SHALL open in a new tab.
+the site's RSS feed. The feed link and the profile links SHALL open in a new tab, so
+that a reader who follows one does not lose the page they were reading. Profile links
+SHALL point to the author's GitHub, LinkedIn, Instagram and YouTube presences.
 
 The header SHALL also present controls for capabilities that are not implemented: a
 section link reserved for an about page, a language selector, and a display-mode control.
@@ -55,7 +56,7 @@ width.
 #### Scenario: Reaching the feed
 
 - **WHEN** a reader clicks the RSS item in the header navigation
-- **THEN** the site's RSS feed is served
+- **THEN** the site's RSS feed is served in a new tab, leaving the current page open
 
 #### Scenario: Current section is marked
 
