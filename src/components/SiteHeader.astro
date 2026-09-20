@@ -64,10 +64,10 @@ const isHome = path === '/' || path === '';
   </div>
 
   <div class="bg-band border-emerald-deep border-b-2">
-    <div class="news:flex-row news:justify-end mx-auto flex max-w-[1160px] flex-col gap-2 px-6 py-1">
+    <div class="mx-auto max-w-[1160px] px-6 py-1">
       {/* Two columns on a phone so four links sit as a 2x2 block with nothing to
-          scroll; a single row once there is width for it. */}
-      <div class="news:flex grid grid-cols-2 gap-2">
+          scroll; a single row, pushed right, once there is width for it. */}
+      <div class="news:flex news:justify-end grid grid-cols-2 gap-2">
         {SOCIAL_LINKS.map((link) => (
           <BracketButton label={link.label} href={link.href} external variant="band" bracketed>
             <SocialIcon name={link.icon} class="h-3 w-3" />
