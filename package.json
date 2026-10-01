@@ -13,12 +13,12 @@
     "preview": "astro preview",
     "astro": "astro",
     "check": "astro check",
-    "check:assets": "node scripts/check-post-assets.mjs",
+    "check:posts": "node scripts/check-posts.mjs",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "verify": "pnpm format:check && pnpm lint && pnpm check && pnpm check:assets"
+    "verify": "pnpm format:check && pnpm lint && pnpm check && pnpm check:posts"
   },
   "dependencies": {
     "@astrojs/markdown-satteri": "^0.4.1",
@@ -33,6 +33,7 @@
     "astro": "^7.3.2",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
+    "sharp": "^0.35.4",
     "tailwindcss": "^4.3.3"
   },
   "allowScripts": {
