@@ -1,35 +1,11 @@
-# Blog Content
+# Spec Delta
 
-## Purpose
+## RENAMED Requirements
 
-Defines the blog's post content model: the frontmatter every post must declare, how a
-post's public slug and publication state are determined, how a post summary is produced
-when the author writes none, and where post images live.
+- FROM: `### Requirement: Post images are served from a stable public path`
+- TO: `### Requirement: Post images are served from the site's own origin`
 
-## Requirements
-
-### Requirement: Post frontmatter contract
-
-Every post SHALL declare `title` (string), `pubDate` (date), and `type`
-(one of `blog`, `article`, `tutorial`). Every post MAY declare `tags` (a list of tag
-slugs, defaulting to empty), `description` (string), `updatedDate` (date), and `draft`
-(boolean, defaulting to `false`). A post missing a required field or carrying a `type`
-outside the permitted set SHALL fail the build with an error naming the offending file.
-
-#### Scenario: Post declares only the required fields
-
-- **WHEN** a post declares `title`, `pubDate`, and `type` and nothing else
-- **THEN** the build succeeds, the post is treated as published, and its tag list is empty
-
-#### Scenario: Post omits a required field
-
-- **WHEN** a post omits `pubDate`
-- **THEN** the build fails and the error identifies the file and the missing field
-
-#### Scenario: Post declares an unrecognized type
-
-- **WHEN** a post declares `type: newsletter`
-- **THEN** the build fails and the error identifies the file and the invalid value
+## MODIFIED Requirements
 
 ### Requirement: Post slug derivation
 
@@ -78,51 +54,6 @@ present. The report SHALL name the offending file.
 
 - **WHEN** the filename rules are checked against the migrated posts
 - **THEN** no file is reported
-
-### Requirement: Draft posts are excluded from production
-
-A post with `draft: true` SHALL be visible during local development and SHALL be absent
-from production builds, including every post listing, the feed, and the sitemap. A draft
-post SHALL NOT be reachable at its own URL in a production build.
-
-#### Scenario: Draft in development
-
-- **WHEN** a post has `draft: true` and the site is run in development
-- **THEN** the post appears in listings and is reachable at its URL
-
-#### Scenario: Draft in production
-
-- **WHEN** a post has `draft: true` and the site is built for production
-- **THEN** the post is absent from listings, the feed, and the sitemap, and its URL returns the 404 page
-
-### Requirement: Post summaries are derived when not authored
-
-When a post declares no `description`, the system SHALL derive a summary from the post's
-body text. Derivation SHALL strip Markdown syntax so the result is plain prose, SHALL
-exclude code block contents, and SHALL truncate at a word boundary rather than mid-word.
-Two lengths SHALL be available: a short summary of at most 120 characters for post
-listings, and a long summary of at most 200 characters for metadata. When a post does
-declare a `description`, that text SHALL be used verbatim at both lengths.
-
-#### Scenario: Post without a description
-
-- **WHEN** a post declares no `description` and its body opens with prose
-- **THEN** listings show a summary of at most 120 characters of that prose and metadata carries at most 200, both ending at a word boundary
-
-#### Scenario: Post opening with a code block
-
-- **WHEN** a post's body begins with a fenced code block followed by prose
-- **THEN** the derived summary contains the prose and none of the code
-
-#### Scenario: Post with an authored description
-
-- **WHEN** a post declares `description: "Um guia sobre ES Modules"`
-- **THEN** that exact text is used in both listings and metadata, untruncated
-
-#### Scenario: Post shorter than the summary length
-
-- **WHEN** a post's body prose is 60 characters long
-- **THEN** the summary is those 60 characters with no ellipsis or padding
 
 ### Requirement: Post images are served from the site's own origin
 

@@ -17,16 +17,16 @@ mise exec -- pnpm verify
 
 ## Commands
 
-| Command             | What it does                                                |
-| ------------------- | ----------------------------------------------------------- |
-| `pnpm dev`          | Dev server                                                  |
-| `pnpm build`        | Production build into `dist/`                               |
-| `pnpm preview`      | Serve the built output                                      |
-| `pnpm check`        | `astro check` — types and Astro diagnostics                 |
-| `pnpm lint`         | ESLint                                                      |
-| `pnpm format`       | Prettier, write mode                                        |
-| `pnpm check:assets` | Every post image resolves to a file in `public/`            |
-| `pnpm verify`       | format:check + lint + check + check:assets — run before PRs |
+| Command            | What it does                                               |
+| ------------------ | ---------------------------------------------------------- |
+| `pnpm dev`         | Dev server                                                 |
+| `pnpm build`       | Production build into `dist/`                              |
+| `pnpm preview`     | Serve the built output                                     |
+| `pnpm check`       | `astro check` — types and Astro diagnostics                |
+| `pnpm lint`        | ESLint                                                     |
+| `pnpm format`      | Prettier, write mode                                       |
+| `pnpm check:posts` | Post filenames and image references — gates deploys        |
+| `pnpm verify`      | format:check + lint + check + check:posts — run before PRs |
 
 When starting the dev server, use background mode: `astro dev --background`.
 Manage it with `astro dev stop`, `astro dev status`, and `astro dev logs`.
@@ -37,6 +37,7 @@ Manage it with `astro dev stop`, `astro dev status`, and `astro dev logs`.
 src/
   components/      .astro components
   content/blog/    posts (.md) — one file per post, filename == URL slug
+  content/blog/images/  images for new posts, referenced as ./images/<file>
   content.config.ts  collection schema — frontmatter contract lives here
   layouts/         page shells
   lib/             shared helpers (post querying, excerpts, dates, tag labels)
@@ -44,8 +45,9 @@ src/
   styles/global.css   Tailwind entry + reset + theme
   styles/content.css  post body typography and code blocks
   consts.ts        site metadata and social links
-public/uploads/    all post images, referenced as /uploads/<file>
-scripts/           repo checks (post asset verification)
+public/uploads/    migrated posts' images, referenced as /uploads/<file>
+scripts/           repo checks (post filenames and image references)
+frontmatter.json   Front Matter CMS config for visual authoring
 ```
 
 ## Conventions
@@ -103,6 +105,24 @@ scripts/           repo checks (post asset verification)
   curls quotes and dashes that the migrated posts expect to stay straight.
 - Posts with `draft: true` are visible in dev and excluded from builds, the RSS
   feed, and the sitemap — see `src/lib/posts.ts`.
+- Visual authoring runs through two VS Code extensions (Front Matter CMS, Markdown for
+  Humans); the site neither ships nor depends on them. `frontmatter.json` mirrors the
+  `blog` schema in `src/content.config.ts` and the keys of `TAG_LABELS` in
+  `src/lib/posts.ts` — change them together. Its content type must stay named
+  `default`: Front Matter picks a content type by the post's `type` key and falls back
+  to `default` when none is named `blog` / `article` / `tutorial`. The date-prefix
+  settings are deliberately `""`; Front Matter's default prefixes filenames with the
+  creation date, which would change the post's URL.
+- Post images take one of two forms. New posts co-locate them in
+  `src/content/blog/images/` and reference them as `./images/<file>`, which is what
+  Markdown for Humans writes on paste or drop. Astro optimises them to WebP at build
+  time, which needs `sharp` declared directly — pnpm doesn't hoist Astro's copy. The
+  migrated posts keep `/uploads/<file>` from `public/uploads/`, served unchanged. Don't
+  move one form into the other casually: `/uploads/` paths are stable, co-located ones
+  are hashed.
+- Netlify runs `pnpm check:posts` before `astro build`, so a date-prefixed or accented
+  filename, or an image that is missing, external, or neither under `/uploads/` nor
+  inside `src/content/blog/`, blocks the deploy rather than shipping.
 
 ## Spec-driven development
 

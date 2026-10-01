@@ -1,0 +1,87 @@
+{
+  "$schema": "https://frontmatter.codes/frontmatter.schema.json",
+  "frontMatter.framework.id": "astro",
+  "frontMatter.preview.host": "http://localhost:4321",
+  "frontMatter.content.pageFolders": [
+    {
+      "title": "blog",
+      "path": "[[workspace]]/src/content/blog",
+      "filePrefix": ""
+    }
+  ],
+  "frontMatter.content.publicFolder": "public",
+  "frontMatter.templates.prefix": "",
+  "frontMatter.taxonomy.dateFormat": "yyyy-MM-dd",
+  "frontMatter.taxonomy.contentTypes": [
+    {
+      "name": "default",
+      "pageBundle": false,
+      "previewPath": "'post'",
+      "filePrefix": "",
+      "fileType": "md",
+      "clearEmpty": true,
+      "fields": [
+        {
+          "title": "Título",
+          "name": "title",
+          "type": "string",
+          "required": true
+        },
+        {
+          "title": "Descrição",
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "title": "Data de publicação",
+          "name": "pubDate",
+          "type": "datetime",
+          "dateFormat": "yyyy-MM-dd",
+          "default": "{{now}}",
+          "isPublishDate": true,
+          "required": true
+        },
+        {
+          "title": "Atualizado em",
+          "name": "updatedDate",
+          "type": "datetime",
+          "dateFormat": "yyyy-MM-dd"
+        },
+        {
+          "title": "Tipo",
+          "name": "type",
+          "type": "choice",
+          "choices": ["blog", "article", "tutorial"],
+          "default": "blog",
+          "required": true
+        },
+        {
+          "title": "Tags",
+          "name": "tags",
+          "type": "choice",
+          "multiple": true,
+          "choices": [
+            "aleatorio",
+            "javascript",
+            "web",
+            "typescript",
+            "google-cloud",
+            "aws",
+            "frontend",
+            "backend",
+            "tech",
+            "nodejs",
+            "react",
+            "ia"
+          ]
+        },
+        {
+          "title": "Rascunho",
+          "name": "draft",
+          "type": "draft",
+          "default": true
+        }
+      ]
+    }
+  ]
+}

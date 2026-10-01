@@ -4,6 +4,8 @@ dist/
 .astro/
 # netlify local state
 .netlify/
+# front matter cms local cache
+.frontmatter/database/
 
 # dependencies
 node_modules/
