@@ -15,10 +15,7 @@ const COLOR = {
   header: '#131b17',
   band: '#dfd9cb',
   bandRaised: '#eae5d9',
-  wellSoft: '#1a2520',
   emeraldDeep: '#1e4d3a',
-  emeraldMid: '#40916c',
-  emeraldMint: '#74c69d',
   bright: '#f7f9f6',
   outline: '#8a938c',
   pixelBlack: '#0b0e0d',
@@ -71,18 +68,9 @@ const chip = (label: string, dashed = false): Element =>
     padding: '4px 10px',
   });
 
-const badge = (label: string): Element =>
-  text(label, {
-    ...mono(16),
-    backgroundColor: COLOR.wellSoft,
-    color: COLOR.emeraldMint,
-    border: `1px solid ${COLOR.emeraldMid}`,
-    padding: '2px 4px',
-  });
-
 interface Card {
   bandLeft: Element;
-  bandRight: Element;
+  bandRight?: Element;
   chips: Element[];
   title: string;
   titleSize: number;
@@ -163,7 +151,7 @@ function card(content: Card, avatar: string): Element {
               borderBottom: `2px solid ${COLOR.emeraldDeep}`,
               padding: '12px 28px',
             },
-            [content.bandLeft, content.bandRight],
+            content.bandRight ? [content.bandLeft, content.bandRight] : [content.bandLeft],
           ),
           box({ flexDirection: 'column', flexGrow: 1, padding: 24, gap: 12 }, body),
         ],
@@ -244,7 +232,7 @@ export async function renderPostImage(post: Post, number: number): Promise<Buffe
       titleSize: title.length > LONG_TITLE_CHARS ? TITLE_SIZE_SMALL : TITLE_SIZE_LARGE,
       summary: excerpt(post),
       footerLeft: text(isoDate(post.data.pubDate), { ...mono(20), color: COLOR.outline }),
-      footerRight: [text(SITE.author, { ...mono(20), color: COLOR.emeraldDeep }), badge('[1P]')],
+      footerRight: [text(SITE.author, { ...mono(20), color: COLOR.emeraldDeep })],
     },
     avatar,
   );
@@ -256,7 +244,6 @@ export async function renderSiteImage(): Promise<Buffer> {
   const tree = card(
     {
       bandLeft: text(`> ${new URL(SITE.url).host}`, { ...mono(22, 400), color: COLOR.emeraldDeep }),
-      bandRight: badge('[1P]'),
       chips: [],
       title: SITE.title,
       titleSize: TITLE_SIZE_LARGE,
