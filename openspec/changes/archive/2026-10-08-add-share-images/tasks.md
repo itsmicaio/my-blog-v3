@@ -86,6 +86,12 @@
       `/og/entendendo-ecmascript-modules.png` next to the local one and run the preview's
       post URL through a preview debugger (opengraph.xyz or LinkedIn's Post Inspector).
       Verify the two images match and the debugger shows the card.
+      Checked on deploy preview 6: the preview's image is byte-identical to the local
+      build (0 of 756,000 pixels differ), `site.png` and the post images serve as PNG,
+      and the draft is a 404. The debugger half cannot pass before merge: the page's
+      `og:image` is built from the site URL, so it points at the production origin,
+      which serves the file only once this is deployed. Re-run the debugger on a
+      production post URL after merging.
 - [x] 5.3 Run `mise exec -- openspec validate add-share-images --strict`. Verify it reports
       the change as valid.
 
