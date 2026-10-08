@@ -18,7 +18,12 @@ const { post } = Astro.props;
 const { Content } = await render(post);
 ---
 
-<BaseLayout title={post.data.title} description={summary(post)}>
+<BaseLayout
+  title={post.data.title}
+  description={summary(post)}
+  image={{ src: `/og/${post.id}.png`, alt: post.data.title }}
+  type="article"
+>
   <article class="mb-7 flex w-full flex-col items-center pl-0">
     <div class="w-full max-w-2xl">
       <h1 class="news:mx-0 mx-4 text-2xl font-bold">{post.data.title}</h1>

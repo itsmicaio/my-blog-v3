@@ -10,6 +10,11 @@ export async function getPublishedPosts(): Promise<Post[]> {
   return posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 }
 
+/** Ordinal counted from the oldest listed post, so a post keeps its number as newer ones arrive. */
+export function postNumber(posts: readonly Post[], post: Post): number {
+  return posts.length - posts.indexOf(post);
+}
+
 export async function getArticles(limit?: number): Promise<Post[]> {
   const articles = (await getPublishedPosts()).filter((post) => post.data.type === 'article');
   return limit === undefined ? articles : articles.slice(0, limit);

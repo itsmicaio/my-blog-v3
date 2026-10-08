@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PostCard from '../components/PostCard.astro';
 import { SITE } from '../consts';
-import { getPublishedPosts } from '../lib/posts';
+import { getPublishedPosts, postNumber } from '../lib/posts';
 
 const posts = await getPublishedPosts();
 ---
@@ -21,8 +21,8 @@ const posts = await getPublishedPosts();
       </h1>
 
       <ul class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {posts.map((post, index) => (
-          <PostCard post={post} number={posts.length - index} />
+        {posts.map((post) => (
+          <PostCard post={post} number={postNumber(posts, post)} />
         ))}
       </ul>
     </section>
