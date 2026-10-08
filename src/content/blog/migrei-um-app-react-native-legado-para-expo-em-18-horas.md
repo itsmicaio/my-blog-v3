@@ -26,6 +26,8 @@ O aplicativo foi feito no modo freela por mim há cerca de 2,5 anos. De lá pra 
 - No dia em que fui buildar a nova release, meu Xcode atualizou e quebrou a versão iOS. Felizmente, uma DEV do time tinha a versão correta e conseguiu fazer a build de lá.
 - Mas foi na hora de enviar para a Play Store que fomos bloqueados: o nível do SDK do Play Faturamento (Android) também precisava ser atualizado para a versão 8. Sem chance de adiar a data de corte, aqui não deu pra fugir, precisávamos de fato atualizar.
 
+![erro-sdk-play-faturamento](./images/erro-sdk-play-faturamento.jpeg)
+
 Diante desses desafios e com os benefícios de utilizar o Expo em mente, como a build em nuvem, as atualizações de SDK facilitadas e a possibilidade de utilizar OTA releases no futuro, decidi fazer essa migração.
 
 ## Dia 01: Planejamento e validações necessárias
@@ -57,6 +59,8 @@ Durante essas horas, também paralelizei um outro objetivo que tinha para esse d
 O clima já era de vitória, mas ainda faltava fazer a release oficial para as lojas. Portanto, dedicamos o 4º dia a um teste geral da release, onde não só eu usei o app, mas também os outros integrantes do time. Além disso, os devs do time já entraram no circuito e adicionaram novas features já no app novo: o ciclo de desenvolvimento não parou em nenhum momento.
 
 E então chegou o grande dia. Foram mais quatro horas de trabalho, onde fiz um refinamento de alguns detalhes, correções de bugs bem pontuais e toda a configuração do EAS. Finalmente estávamos livres das builds locais e da necessidade de um MacBook para fazer isso. Para finalizar, um resquício de ação humana: precisei mover manualmente as versões para produção nos painéis das lojas Android e iOS.
+
+![dash-eas-builds](./images/dash-eas-builds.png)
 
 ## Números que chamaram minha atenção
 
