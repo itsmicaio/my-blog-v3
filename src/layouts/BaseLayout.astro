@@ -4,17 +4,29 @@ import '../styles/global.css';
 import '../styles/content.css';
 import { SITE } from '../consts';
 import SiteHeader from '../components/SiteHeader.astro';
+import { SHARE_IMAGE_HEIGHT, SHARE_IMAGE_WIDTH } from '../lib/share-image';
 
 interface Props {
   title?: string;
   description?: string;
+  /** Link-preview image; a page without one of its own gets the site default. */
+  image?: { src: string; alt: string };
+  type?: 'website' | 'article';
   /** v2's linktree page has its own full-bleed chrome instead of the site header. */
   bare?: boolean;
 }
 
-const { title, description = SITE.description, bare = false } = Astro.props;
+const {
+  title,
+  description = SITE.description,
+  image = { src: '/og/site.png', alt: `${SITE.title} — ${SITE.tagline}` },
+  type = 'website',
+  bare = false,
+} = Astro.props;
 const pageTitle = title ?? SITE.title;
 const canonical = new URL(Astro.url.pathname, Astro.site);
+// Preview crawlers do not resolve relative references, so the image URL is absolute.
+const imageUrl = new URL(image.src, Astro.site);
 ---
 
 <!doctype html>
@@ -35,8 +47,13 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={type} />
+    <meta property="og:image" content={imageUrl} />
+    <meta property="og:image:width" content={String(SHARE_IMAGE_WIDTH)} />
+    <meta property="og:image:height" content={String(SHARE_IMAGE_HEIGHT)} />
+    <meta property="og:image:alt" content={image.alt} />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={imageUrl} />
     <script
       is:inline
       async

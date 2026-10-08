@@ -41,7 +41,9 @@ src/
   content.config.ts  collection schema — frontmatter contract lives here
   layouts/         page shells
   lib/             shared helpers (post querying, excerpts, dates, tag labels)
+  lib/share-image.ts  link-preview card renderer behind the /og/ routes
   pages/           file-based routes — / , /post/<slug>/ , /linktree , /404
+  pages/og/        build-time share images — /og/<slug>.png and /og/site.png
   styles/global.css   Tailwind entry + reset + theme
   styles/content.css  post body typography and code blocks
   consts.ts        site metadata and social links
@@ -84,7 +86,17 @@ frontmatter.json   Front Matter CMS config for visual authoring
   dimming the whole element washes the borders out, and the frames are the design.
 - Space Grotesk (body/headings) and Space Mono (labels) are self-hosted through
   Astro's top-level `fonts` config, so no third-party font request is made. Add a
-  weight there before using it.
+  weight there before using it. The share-image renderer is outside that pipeline:
+  Satori cannot read the WOFF2 files Astro downloads, so it reads static WOFF files from
+  the `@fontsource/space-grotesk` and `@fontsource/space-mono` dev dependencies.
+- Share images (`og:image`) are generated when the site is built, one per published
+  post at `/og/<slug>.png` plus `/og/site.png` for every other page, by
+  `src/lib/share-image.ts`: Satori lays out the home-page post card, sharp rasterises
+  it. The renderer mirrors `PostCard.astro` by hand, with the `@theme` colours copied as
+  hex, so a change to the card or the palette is made in both places. Satori is loaded
+  through `require`, not `import`: its 0.36 ES module build breaks under Node (fixed
+  upstream in 0.37.1), so drop the workaround once the lockfile moves past that version.
+  `BaseLayout.astro` takes `image` and `type` props; only the post page sets them.
 - Post body styling lives in `src/styles/content.css` under the `.mdx` class. It is
   global rather than scoped because it targets HTML generated from Markdown at
   build time. Inline code and code blocks deliberately inherit the body sans-serif

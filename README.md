@@ -104,6 +104,7 @@ src/
   layouts/            shells de página
   lib/                helpers (posts, resumos, datas, rótulos de tags)
   pages/              rotas — / , /post/<slug>/ , /linktree , /404
+  pages/og/           imagens de compartilhamento (og:image) geradas no build
   styles/global.css   entrada do Tailwind + reset + tema
   styles/content.css  tipografia do corpo dos posts
   consts.ts           metadados do site e links sociais
@@ -118,3 +119,7 @@ frontmatter.json      configuração do Front Matter CMS
 Netlify serve o `dist/` estático; `netlify.toml` define o comando de build — que roda
 `pnpm check:posts` antes do `astro build` — e as versões de Node/pnpm. Não há adapter — o site não tem rotas dinâmicas nem
 JavaScript no cliente além da tag de analytics.
+
+O build também gera as imagens de compartilhamento (`og:image`): uma por post publicado em
+`/og/<slug>.png` e uma padrão em `/og/site.png`, desenhadas como o card da home com Satori
+e rasterizadas com sharp. Nada roda em tempo de requisição.
