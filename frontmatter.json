@@ -72,7 +72,10 @@
             "tech",
             "nodejs",
             "react",
-            "ia"
+            "ia",
+            "mobile",
+            "react-native",
+            "expo"
           ]
         },
         {

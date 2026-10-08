@@ -98,6 +98,9 @@ const TAG_LABELS: Record<string, string> = {
   nodejs: 'NodeJS',
   react: 'React',
   ia: 'IA',
+  mobile: 'Mobile',
+  'react-native': 'React Native',
+  expo: 'Expo',
 };
 
 const warnedTags = new Set<string>();
