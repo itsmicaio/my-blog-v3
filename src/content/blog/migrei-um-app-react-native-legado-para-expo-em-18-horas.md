@@ -1,13 +1,13 @@
 ---
 title: Migrei um app React Native legado para Expo em 18 horas
-pubDate: 2026-10-01
+pubDate: 2026-10-08
 type: article
 tags:
   - ia
   - mobile
   - react-native
   - expo
-draft: true
+draft: false
 description: Meses de dificuldades e libs atrasadas foram resolvidos em 5 dias. O agente de IA disse que seriam semanas; eu acreditei que faria em poucos dias e deu certo.
 ---
 
@@ -19,7 +19,7 @@ Fala galera, Caio aqui! Hoje eu quero contar por que eu fiz uma migração de um
 
 ## Os débitos do app
 
-O aplicativo foi feito no modo freela por mim há cerca de 2,5 anos. De lá pra cá, o app mudou muito: saiu de uma Material UI para design system próprio, features novas e features removidas, e pouquíssimas atualizações de bibliotecas e SDKs. Essa negligência nas atualizações foi o grande vilão da história e fez com que a gente chegasse a esse patamar:
+O aplicativo foi feito no modo freela por mim há cerca de 2,5 anos. De lá pra cá, o app mudou muito: saiu de uma Material UI para design system próprio, features novas e features removidas, e pouquíssimas atualizações de bibliotecas e SDKs. Essa negligência nas atualizações foi o nosso grande erro e fez com que a gente chegasse a esse patamar:
 
 - Devido ao JSC + legacy architecture, o ambiente de desenvolvimento acumulou um crash sempre que precisávamos dar reload no app, o que forçava uma nova build a cada mudança no código e obviamente atrasava muito o desenvolvimento.
 - O nível da API do Android estava abaixo do necessário (API 36). Porém, tinha conseguido postergar essa data em 2 meses, o que nos deu um fôlego.
