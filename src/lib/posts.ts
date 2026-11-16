@@ -97,6 +97,7 @@ const TAG_LABELS: Record<string, string> = {
   typescript: 'TypeScript',
   'google-cloud': 'GCP',
   aws: 'AWS',
+  cloudflare: 'Cloudflare',
   frontend: 'FrontEnd',
   backend: 'BackEnd',
   tech: 'Tech',
