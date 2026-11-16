@@ -6,7 +6,7 @@ tags:
     - typescript
     - react
     - cloudflare
-draft: true
+draft: false
 description: No final do primeiro turno das eleições a redação ficou insatisfeita com a cobertura da apuração. Após avaliar as opções, decidimos desenvolver internamente.
 type: blog
 ---
