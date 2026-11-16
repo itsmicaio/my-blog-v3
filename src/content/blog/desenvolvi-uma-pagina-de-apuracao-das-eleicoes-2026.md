@@ -1,6 +1,6 @@
 ---
 title: Desenvolvi uma página de apuração das Eleições 2026
-pubDate: 2026-11-06
+pubDate: 2026-11-16
 tags:
     - web
     - typescript
